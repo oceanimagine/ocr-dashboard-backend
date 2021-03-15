@@ -14,8 +14,8 @@ function check_page($redirect){
 }
 check_page("openposition");
 
-$base_url_action_edit = "?page=openposition-edit";
-$base_url_action_hapus = "?page=openposition-hapus";
+$base_url_action_edit = "?page=openposition-detail";
+$base_url_action_logs = "?page=openposition-logs";
 
 ?>
 <table class="table table-bordered" id="table_openposition">
@@ -26,6 +26,7 @@ $base_url_action_hapus = "?page=openposition-hapus";
             <th>Sent Amount</th>
             <th>Done Amount</th>
             <th>Action</th>
+            <th>Logs</th>
         </tr>
     </thead>
     <tbody>
@@ -71,6 +72,7 @@ $base_url_action_hapus = "?page=openposition-hapus";
                     <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_sent; ?></td>
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_done; ?></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id']; ?>">Detail</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id']; ?>">See Logs</a></td>
                 </tr>
                 <?php
                 $no++;
@@ -78,7 +80,7 @@ $base_url_action_hapus = "?page=openposition-hapus";
         } else {
             ?>
             <tr>
-                <td colspan="5">Belum ada data Open Position.</td>
+                <td colspan="6">Belum ada data Open Position.</td>
             </tr>  
             <?php 
             
@@ -120,6 +122,10 @@ window.addEventListener("load", function(){
         if(get_td[i].getAttribute("class") === "row_sent"){
             var id_data = get_td[i].getAttribute("id_data");
             ajax_sent(get_td[i], "get_sent.php?id_position=" + id_data);
+        }
+        if(get_td[i].getAttribute("class") === "row_done"){
+            var id_data = get_td[i].getAttribute("id_data");
+            ajax_sent(get_td[i], "get_done.php?id_position=" + id_data);
         }
     }
 });
