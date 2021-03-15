@@ -25,7 +25,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
 <div class="row">
     <div class="col-sm-8"></div>
     <div class="col-sm-4">
-        <input onkeyup="cari(this.value);" type="text" class="form-control" id="perusahaan" placeholder="Cari Open Position" name="cari_open_position" id="cari_open_position" value="<?php echo $s; ?>">
+        <input onkeyup="cari(this.value);" type="text" class="form-control" placeholder="Cari Open Position" name="cari_open_position" id="cari_open_position" value="<?php echo $s; ?>">
     </div> 
 </div>
 <br />
@@ -149,6 +149,7 @@ function cari(string_search){
         if(this.readyState === 4 && this.status === 200){
             var hasil_op = document.getElementById("hasil_op");
             hasil_op.innerHTML = this.responseText;
+            load_td();
         }
     };
     xmlhttp.open("GET","ajax/get_open_position.php?q=" + encodeURI(string_search));
