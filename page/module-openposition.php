@@ -102,8 +102,11 @@ $base_url_action_hapus = "?page=openposition-hapus";
 function ajax_sent(object_td, link){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
-        if(this.readyState === 4 and this.status === 200){
-            console.log(this.responseText);
+        if(this.readyState === 4 && this.status === 200){
+            object_td.innerHTML = this.responseText;
+            setTimeout(function(){
+                ajax_sent(object_td, link);
+            }, 1000);
         }
     };
     xmlhttp.open("GET","ajax/" + link);
@@ -111,13 +114,12 @@ function ajax_sent(object_td, link){
 }
 
 window.addEventListener("load", function(){
-    console.log("masuk");
     var table_openposition = document.getElementById("table_openposition");
     var get_td = table_openposition.getElementsByTagName("td");
     for(var i = 0; i < get_td.length; i++){
         if(get_td[i].getAttribute("class") === "row_sent"){
             var id_data = get_td[i].getAttribute("id_data");
-            // console.log(id_data);
+            ajax_sent(get_td[i], "get_sent.php?id_position=" + id_data);
         }
     }
 });
