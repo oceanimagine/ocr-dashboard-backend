@@ -1,35 +1,12 @@
-<?php 
+<?php
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
-function check_page($redirect){
-    if(isset($_SESSION['username']) && isset($_SESSION['password'])){
-        if(!isset($_GET['page'])){
-            header("location: ../index.php?page=" . $redirect);
-        }
-    } else {
-        header("location: ../login.php");
-    }
-}
-check_page("openposition");
-
-$base_url_action_edit = "?page=openposition-detail";
-$base_url_action_logs = "?page=openposition-logs";
-$halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
+include_once "../koneksi.php";
 
 $search = isset($_GET['q']) && $_GET['q'] != "" ? " where open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%'" : "";
 $q = isset($_GET['q']) && $_GET['q'] != "" ? "&q=" . urlencode($_GET['q']) : "";
-$s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
+
 ?>
-<div class="row">
-    <div class="col-sm-8"></div>
-    <div class="col-sm-4">
-        <input onkeyup="cari(this.value);" type="text" class="form-control" id="perusahaan" placeholder="Cari Open Position" name="cari_open_position" id="cari_open_position" value="<?php echo $s; ?>">
-    </div> 
-</div>
-<br />
-<div id="hasil_op">
+
 <table class="table table-bordered" id="table_openposition">
     <thead>                  
         <tr>
@@ -69,7 +46,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             }
         }
         
-        $query_openposition = mysqli_query($connect, "select id, open_position from tbl_event " . $search . " order by open_position asc limit $start, $batas_data");
+        $query_openposition = mysqli_query($connect, "select id, open_position from tbl_event ".$search." order by open_position asc limit $start, $batas_data");
         if(mysqli_num_rows($query_openposition) > 0){
             $no = $start + 1;
             while($hasil_openposition = mysqli_fetch_array($query_openposition)){
@@ -109,54 +86,3 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         <?php } ?>
     </ul>
 </div>
-</div>
-
-<script type="text/javascript">
-
-function ajax_sent(object_td, link){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-        if(this.readyState === 4 && this.status === 200){
-            object_td.innerHTML = this.responseText;
-            setTimeout(function(){
-                ajax_sent(object_td, link);
-            }, 1000);
-        }
-    };
-    xmlhttp.open("GET","ajax/" + link);
-    xmlhttp.send(null);
-}
-
-function load_td(){
-    var table_openposition = document.getElementById("table_openposition");
-    var get_td = table_openposition.getElementsByTagName("td");
-    for(var i = 0; i < get_td.length; i++){
-        if(get_td[i].getAttribute("class") === "row_sent"){
-            var id_data = get_td[i].getAttribute("id_data");
-            ajax_sent(get_td[i], "get_sent.php?id_position=" + id_data);
-        }
-        if(get_td[i].getAttribute("class") === "row_done"){
-            var id_data = get_td[i].getAttribute("id_data");
-            ajax_sent(get_td[i], "get_done.php?id_position=" + id_data);
-        }
-    }
-}
-
-
-function cari(string_search){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-        if(this.readyState === 4 && this.status === 200){
-            var hasil_op = document.getElementById("hasil_op");
-            hasil_op.innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET","ajax/get_open_position.php?q=" + encodeURI(string_search));
-    xmlhttp.send(null);
-}
-
-window.addEventListener("load", function(){
-    load_td();
-});
-
-</script>

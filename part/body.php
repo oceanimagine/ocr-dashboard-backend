@@ -50,7 +50,7 @@
                             </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <div class="tab-content p-0" style="overflow: auto;">
+                            <div class="tab-content p-0" style="overflow: hidden;">
                                 <!-- Morris chart - Sales -->
                                 <?php
                                 // put your code here
