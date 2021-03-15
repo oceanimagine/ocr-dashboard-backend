@@ -1,0 +1,1 @@
+<textarea class="form-control" style="height: 400px; resize: none;" readonly></textarea>

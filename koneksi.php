@@ -44,6 +44,32 @@ function judul($param){
     return $id ? str_replace("Add", "Edit", $hasil_huruf) : $hasil_huruf; 
 }
 
+function call_back_button(){
+    global $connect;
+    $page = isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "";
+    if($page != ""){
+        $query_back = mysqli_query($connect, "select parent_page, param_additional from tbl_referrer where referrer = '".$page."'");
+        if(mysqli_num_rows($query_back) > 0){
+            $hasil_back = mysqli_fetch_array($query_back);
+            $hasil = "";
+            if($hasil_back['param_additional'] != ""){
+                $explode_comma = explode(",",$hasil_back['param_additional']);
+                $ands_ = "";
+                for($i = 0; $i < sizeof($explode_comma); $i++){
+                    $explode_titik_koma = explode(":", $explode_comma[$i]);
+                    if(isset($explode_titik_koma[1]) && $explode_titik_koma[1] != ""){
+                        $hasil = $hasil . $ands_ . $explode_titik_koma[1] . "=" . (isset($_GET[$explode_titik_koma[0]]) ? $_GET[$explode_titik_koma[0]] : "");
+                        $ands_ = "&";
+                    }
+                }
+                $hasil = "&" . $hasil;
+            }
+            return $hasil_back['parent_page'] . $hasil;
+        }
+    }
+    return "";
+}
+
 function set_menu(){
     global $connect;
     $query_menu = mysqli_query($connect, "select * from tbl_menu");

@@ -14,7 +14,7 @@ function check_page($redirect){
 }
 check_page("openposition");
 
-$base_url_action_edit = "?page=openposition-detail";
+$base_url_action_edit = "?page=openposition-detail-api";
 $base_url_action_hapus = "?page=openposition-hapus";
 $id = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? $_GET['id'] : "";
 $query_jumlah = mysqli_query($connect, "select id_document, id_position, id_pelamar, status_ocr, hasil_ocr, document_type from tbl_document_track where id_position = '".$id."'");
@@ -79,7 +79,7 @@ if(mysqli_num_rows($query_jumlah) > 0){
                     <td class="row_ocr" id_data="<?php echo $hasil_openposition_detail['id_document']; ?>"><?php echo $hasil_openposition_detail['status_ocr']; ?></td>
                     <td><?php echo $hasil_openposition_detail['hasil_ocr']; ?></td>
                     <td><?php echo $hasil_openposition_detail['document_type']; ?></td>
-                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition_detail['id']; ?>">Check API Result</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition_detail['id_document']; ?>&id_openposition=<?php echo $hasil_openposition_detail['id_position']; ?>">Check API Result</a></td>
                 </tr>
                 <?php
                 $no++;
@@ -104,6 +104,40 @@ if(mysqli_num_rows($query_jumlah) > 0){
         <?php } ?>
     </ul>
 </div>
+
+
+<script type="text/javascript">
+
+function ajax_sent(object_td, link){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState === 4 && this.status === 200){
+            object_td.innerHTML = this.responseText;
+            setTimeout(function(){
+                ajax_sent(object_td, link);
+            }, 1000);
+        }
+    };
+    xmlhttp.open("GET","ajax/" + link);
+    xmlhttp.send(null);
+}
+
+window.addEventListener("load", function(){
+    var table_openposition = document.getElementById("table_openposition_detail");
+    var get_td = table_openposition.getElementsByTagName("td");
+    for(var i = 0; i < get_td.length; i++){
+        if(get_td[i].getAttribute("class") === "row_send"){
+            var id_data = get_td[i].getAttribute("id_data");
+            ajax_sent(get_td[i], "get_status_send.php?id=" + id_data);
+        }
+        if(get_td[i].getAttribute("class") === "row_ocr"){
+            var id_data = get_td[i].getAttribute("id_data");
+            ajax_sent(get_td[i], "get_status_ocr.php?id=" + id_data);
+        }
+    }
+});
+
+</script>
 
 <?php 
 } else {

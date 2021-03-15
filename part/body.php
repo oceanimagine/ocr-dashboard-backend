@@ -29,16 +29,28 @@
                     <!-- Custom tabs (Charts with tabs)-->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
-                                <?php
-                                $page_header = isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "Home";
-                                ?>
-                                Module <?php echo judul($page_header); ?>
-                            </h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        <?php
+                                        $page_header = isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "Home";
+                                        $back_url = call_back_button();
+                                        ?>
+                                        Module <?php echo judul($page_header); ?>                            
+                                    </h3>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="text-align: right;">
+                                        <?php if($back_url){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=<?php echo $back_url; ?>';">Back</button>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <div class="tab-content p-0">
+                            <div class="tab-content p-0" style="overflow: auto;">
                                 <!-- Morris chart - Sales -->
                                 <?php
                                 // put your code here
