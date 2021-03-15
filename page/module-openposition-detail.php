@@ -17,6 +17,7 @@ check_page("openposition");
 $base_url_action_edit = "?page=openposition-detail-api";
 $base_url_action_hapus = "?page=openposition-hapus";
 $id = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? $_GET['id'] : "";
+$halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
 $query_jumlah = mysqli_query($connect, "select id_document, id_position, id_pelamar, status_ocr, hasil_ocr, document_type from tbl_document_track where id_position = '".$id."'");
 if(mysqli_num_rows($query_jumlah) > 0){
 ?>
@@ -79,7 +80,7 @@ if(mysqli_num_rows($query_jumlah) > 0){
                     <td class="row_ocr" id_data="<?php echo $hasil_openposition_detail['id_document']; ?>"><?php echo $hasil_openposition_detail['status_ocr']; ?></td>
                     <td><?php echo $hasil_openposition_detail['hasil_ocr']; ?></td>
                     <td><?php echo $hasil_openposition_detail['document_type']; ?></td>
-                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition_detail['id_document']; ?>&id_openposition=<?php echo $hasil_openposition_detail['id_position']; ?>">Check API Result</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition_detail['id_document']; ?>&id_openposition=<?php echo $hasil_openposition_detail['id_position'] . $halaman_before; ?>">Check API Result</a></td>
                 </tr>
                 <?php
                 $no++;

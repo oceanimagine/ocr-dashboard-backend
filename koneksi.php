@@ -57,12 +57,14 @@ function call_back_button(){
                 $ands_ = "";
                 for($i = 0; $i < sizeof($explode_comma); $i++){
                     $explode_titik_koma = explode(":", $explode_comma[$i]);
-                    if(isset($explode_titik_koma[1]) && $explode_titik_koma[1] != ""){
+                    if(isset($explode_titik_koma[1]) && $explode_titik_koma[1] != "" && isset($_GET[$explode_titik_koma[0]]) && $_GET[$explode_titik_koma[0]] != ""){
                         $hasil = $hasil . $ands_ . $explode_titik_koma[1] . "=" . (isset($_GET[$explode_titik_koma[0]]) ? $_GET[$explode_titik_koma[0]] : "");
                         $ands_ = "&";
                     }
                 }
-                $hasil = "&" . $hasil;
+                if($hasil != ""){
+                    $hasil = "&" . $hasil;
+                }
             }
             return $hasil_back['parent_page'] . $hasil;
         }

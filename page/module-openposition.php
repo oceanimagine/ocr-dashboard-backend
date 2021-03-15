@@ -16,6 +16,7 @@ check_page("openposition");
 
 $base_url_action_edit = "?page=openposition-detail";
 $base_url_action_logs = "?page=openposition-logs";
+$halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
 
 ?>
 <table class="table table-bordered" id="table_openposition">
@@ -71,8 +72,8 @@ $base_url_action_logs = "?page=openposition-logs";
                     <td><?php echo $hasil_openposition['open_position']; ?></td>
                     <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_sent; ?></td>
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_done; ?></td>
-                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id']; ?>">Detail</a></td>
-                    <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id']; ?>">See Logs</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
                 </tr>
                 <?php
                 $no++;
