@@ -2,9 +2,11 @@
 
 include_once "../koneksi.php";
 
+$base_url_action_edit = "?page=openposition-detail";
+$base_url_action_logs = "?page=openposition-logs";
 $search = isset($_GET['q']) && $_GET['q'] != "" ? " where open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%'" : "";
 $q = isset($_GET['q']) && $_GET['q'] != "" ? "&q=" . urlencode($_GET['q']) : "";
-
+$halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
 ?>
 
 <table class="table table-bordered" id="table_openposition">
