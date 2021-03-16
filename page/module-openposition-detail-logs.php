@@ -16,7 +16,9 @@ check_page("openposition-detail-logs");
 
 $id = isset($_GET['id_pelamar']) && $_GET['id_pelamar'] != "" && is_numeric($_GET['id_pelamar']) ? $_GET['id_pelamar'] : "";
 $base_url_action_detail = "?page=openposition-detail-api-logs";
-$halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
+$halaman_before = isset($_GET['halaman_old']) && $_GET['halaman_old'] != "" && is_numeric($_GET['halaman_old']) ? "&halaman_old=" . $_GET['halaman_old'] : "";
+$halaman_now = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
+
 $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] != "" && is_numeric($_GET['id_openposition']) ? "&id_openposition=" . $_GET['id_openposition'] : "";
 ?>
 
@@ -88,7 +90,7 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
                 <tr>
                     <td><?php echo $hasil_openposition_log_detail['id_document']; ?></td>
                     <td><?php echo $hasil_openposition_log_detail['nama_pelamar']; ?></td>
-                    <td><a href="index.php<?php echo $base_url_action_detail . "&id=" . $hasil_openposition_log_detail['id_document'] . "&id_pelamar_old=" . $hasil_openposition_log_detail['id_pelamar'] . $id_openposition . $halaman_before; ?>">Check Result</a></td>
+                    <td><a href="index.php<?php echo $base_url_action_detail . "&id=" . $hasil_openposition_log_detail['id_document'] . "&id_pelamar_old=" . $hasil_openposition_log_detail['id_pelamar'] . $id_openposition . $halaman_now; ?>">Check Result</a></td>
                 </tr>
                 <?php
                 $no++;
@@ -109,7 +111,7 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
 <div class="card-footer clearfix" style="padding-right: 0px; background-color: #fff;">
     <ul class="pagination pagination-sm m-0 float-right">
         <?php for($i = 1; $i <= $batas_halaman; $i++){ ?>
-        <li class="page-item"><a class="page-link" href="index.php?page=openposition-detail-logs&id_pelamar=<?php echo $id; ?>&halaman=<?php echo ($i + $tambah); ?>"<?php echo ($i + $tambah) == $halaman ? " style='background-color: rgba(0,0,0,0.2);'" : ""; ?>><?php echo ($i + $tambah); ?></a></li>
+        <li class="page-item"><a class="page-link" href="index.php?page=openposition-detail-logs&id_pelamar=<?php echo $id; ?>&halaman=<?php echo ($i + $tambah) . $halaman_before . $id_openposition; ?>"<?php echo ($i + $tambah) == $halaman ? " style='background-color: rgba(0,0,0,0.2);'" : ""; ?>><?php echo ($i + $tambah); ?></a></li>
         <?php } ?>
     </ul>
 </div>
