@@ -28,6 +28,8 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
         <tr>
             <th style="vertical-align: middle;">ID API</th>
             <th style="vertical-align: middle;">Applicant Name</th>
+            <th style="vertical-align: middle;">Document Type</th>
+            <th style="vertical-align: middle;">Time Request</th>
             <th style="vertical-align: middle;">Result OCR API</th>
         </tr>
     </thead>
@@ -74,13 +76,16 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
             select 
                 a.id_document, 
                 b.nama_pelamar,
-                a.id_pelamar
+                a.id_pelamar,
+                a.tipe_document,
+                a.timestamp
             from 
                 tbl_id_document_collection_log a, 
                 tbl_pelamar b 
             where 
                 a.id_pelamar = '".$id."' and 
                 a.id_pelamar = b.id
+            order by a.tipe_document asc, a.timestamp desc
             limit $start, $batas_data
         ");
         if(mysqli_num_rows($query_openposition_log_detail) > 0){
@@ -90,6 +95,8 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
                 <tr>
                     <td><?php echo $hasil_openposition_log_detail['id_document']; ?></td>
                     <td><?php echo $hasil_openposition_log_detail['nama_pelamar']; ?></td>
+                    <td><?php echo $hasil_openposition_log_detail['tipe_document']; ?></td>
+                    <td><?php echo $hasil_openposition_log_detail['timestamp']; ?></td>
                     <td><a href="index.php<?php echo $base_url_action_detail . "&id=" . $hasil_openposition_log_detail['id_document'] . "&id_pelamar_old=" . $hasil_openposition_log_detail['id_pelamar'] . $id_openposition . $halaman_now; ?>">Check Result</a></td>
                 </tr>
                 <?php
@@ -98,7 +105,7 @@ $id_openposition = isset($_GET['id_openposition']) && $_GET['id_openposition'] !
         } else {
             ?>
             <tr>
-                <td colspan="3">Belum ada data Open Position Logs Detail.</td>
+                <td colspan="5">Belum ada data Open Position Logs Detail.</td>
             </tr>  
             <?php 
             
