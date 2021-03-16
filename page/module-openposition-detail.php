@@ -40,7 +40,7 @@ $query_jumlah = mysqli_query($connect, "
         
 ");
 if(mysqli_num_rows($query_jumlah) > 0){
-$search = isset($_GET['q']) && $_GET['q'] != "" ? " and (b.nama_pelamar like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or c.open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%')" : "";
+$search = isset($_GET['q']) && $_GET['q'] != "" ? " and (b.nama_pelamar like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or c.open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or a.status_ocr like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or a.status_send like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%')" : "";
 $q = isset($_GET['q']) && $_GET['q'] != "" ? "&q=" . urlencode($_GET['q']) : "";
 $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
 ?>

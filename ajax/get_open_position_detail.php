@@ -3,7 +3,7 @@
 include_once "../koneksi.php";
 
 $base_url_action_edit = "?page=openposition-detail-api";
-$search = isset($_GET['q']) && $_GET['q'] != "" ? " and (b.nama_pelamar like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or c.open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%')" : "";
+$search = isset($_GET['q']) && $_GET['q'] != "" ? " and (b.nama_pelamar like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or c.open_position like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or a.status_ocr like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%' or a.status_send like '%" . mysqli_real_escape_string($connect, urldecode($_GET['q'])) . "%')" : "";
 $q = isset($_GET['q']) && $_GET['q'] != "" ? "&q=" . urlencode($_GET['q']) : "";
 $id = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? $_GET['id'] : "";
 $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? "&halaman_old=" . $_GET['halaman'] : "";
