@@ -36,6 +36,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="vertical-align: middle;">Applicant Name</th>
             <th style="vertical-align: middle;">Position</th>
             <th style="vertical-align: middle;">Total Send</th>
+            <th style="vertical-align: middle;">Show KTP</th>
+            <th style="vertical-align: middle;">Show Ijazah</th>
             <th style="vertical-align: middle;">Action</th>
         </tr>
     </thead>
@@ -47,7 +49,9 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             select 
                 a.nama_pelamar, 
                 b.open_position, 
-                a.id
+                a.id,
+                a.file_ktp,
+                a.file_ijazah
             from 
                 tbl_pelamar a, 
                 tbl_event b 
@@ -84,7 +88,9 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             select 
                 a.nama_pelamar, 
                 b.open_position, 
-                a.id
+                a.id,
+                a.file_ktp,
+                a.file_ijazah
             from 
                 tbl_pelamar a, 
                 tbl_event b 
@@ -105,6 +111,21 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td><?php echo $hasil_openposition_log['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_openposition_log['open_position']; ?></td>
                     <td style="text-align: right;"><?php echo $hasil_jumlah_log['jumlah_log']; ?></td>
+                    <?php 
+                    // File Ijazah
+                    $file_ijazah = "Not Found.";
+                    if(file_exists("../ocrapi/upload/ijazah/" . $hasil_openposition_log['file_ijazah'])){
+                        $file_ijazah = "<a href='../ocrapi/upload/ijazah/".$hasil_openposition_log['file_ijazah']."' target='_blank'>Show Ijazah</a>";
+                    }
+                    
+                    // File KTP
+                    $file_ktp = "Not Found.";
+                    if(file_exists("../ocrapi/upload/ktp/" . $hasil_openposition_log['file_ktp'])){
+                        $file_ktp = "<a href='../ocrapi/upload/ktp/".$hasil_openposition_log['file_ktp']."' target='_blank'>Show KTP</a>";
+                    }
+                    ?>
+                    <td><?php echo $file_ktp; ?></td>
+                    <td><?php echo $file_ijazah; ?></td>
                     <td><a href="index.php<?php echo $base_url_action_detail . "&id_pelamar=" . $hasil_openposition_log['id'] . "&id_openposition=" . $id . $halaman_before; ?>">Detail Logs</a></td>
                 </tr>
                 <?php
@@ -113,7 +134,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         } else {
             ?>
             <tr>
-                <td colspan="5">Belum ada data Open Position Logs.</td>
+                <td colspan="7">Belum ada data Open Position Logs.</td>
             </tr>  
             <?php 
             
