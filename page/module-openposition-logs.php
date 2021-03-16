@@ -104,7 +104,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td style="text-align: right;"><?php echo $no; ?>.</td>
                     <td><?php echo $hasil_openposition_log['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_openposition_log['open_position']; ?></td>
-                    <td><?php echo $hasil_jumlah_log['jumlah_log']; ?></td>
+                    <td style="text-align: right;"><?php echo $hasil_jumlah_log['jumlah_log']; ?></td>
                     <td><a href="index.php<?php echo $base_url_action_detail . "&id_pelamar=" . $hasil_openposition_log['id'] . "&id_openposition=" . $id . $halaman_before; ?>">Detail Logs</a></td>
                 </tr>
                 <?php

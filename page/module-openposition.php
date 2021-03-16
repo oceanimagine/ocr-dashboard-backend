@@ -37,6 +37,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th>Open Position</th>
             <th>Sent Amount</th>
             <th>Done Amount</th>
+            <th>Applicant Amount</th>
             <th>Action</th>
             <th>Logs</th>
         </tr>
@@ -77,12 +78,15 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 $jumlah_done = mysqli_num_rows($query_done_);
                 $query_sent_ = mysqli_query($connect, "select id_position from tbl_document_track where id_position = '".$hasil_openposition['id']."'");
                 $jumlah_sent = mysqli_num_rows($query_sent_);
+                $query_applicant_ = mysqli_query($connect, "select count(id_position) jumlah_pelamar from tbl_pelamar where id_position = '".$hasil_openposition['id']."'");
+                $jumlah_applicant = mysqli_fetch_array($query_applicant_);
                 ?>
                 <tr>
                     <td><?php echo $no; ?></td>
                     <td><?php echo $hasil_openposition['open_position']; ?></td>
-                    <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_sent; ?></td>
-                    <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>"><?php echo $jumlah_done; ?></td>
+                    <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_sent; ?></td>
+                    <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
+                    <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
                     <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
                 </tr>
@@ -92,7 +96,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         } else {
             ?>
             <tr>
-                <td colspan="6">Belum ada data Open Position.</td>
+                <td colspan="7">Belum ada data Open Position.</td>
             </tr>  
             <?php 
             
