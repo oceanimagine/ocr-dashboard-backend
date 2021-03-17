@@ -9,7 +9,11 @@ function check_page($redirect){
             header("location: ../index.php?page=" . $redirect);
         }
     } else {
-        header("location: ../login.php");
+        if(isset($_GET['page'])){
+            header("location: login.php");
+        } else {
+            header("location: ../login.php");
+        }
     }
 }
 check_page("openposition-detail");
