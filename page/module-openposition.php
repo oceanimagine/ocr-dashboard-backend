@@ -39,6 +39,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th>Done Amount</th>
             <th>Applicant Amount</th>
             <th>Callback</th>
+            <th>Reset</th>
             <th>Action</th>
             <th>Logs</th>
         </tr>
@@ -89,6 +90,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
                     <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
                     <td><a href="https://ocr-solution.id:7000/ocrapi/callback-tambahan.php?id_op=<?php echo $hasil_openposition['id']; ?>" target="_blank">Hit Callback</a></td>
+                    <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
                     <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
                 </tr>
@@ -148,6 +150,26 @@ function load_td(){
     }
 }
 
+function reset(id_position){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState === 4 && this.status === 200){
+            var json_result = JSON.parse(this.responseText);
+            if(typeof json_result.message !== "undefined" && json_result.message === "Berhasil Melakukan Proses Reset."){
+                var keterangan_api_reset = document.getElementById("keterangan_api_reset");
+                keterangan_api_reset.innerHTML = json_result.message;
+            } else {
+                var keterangan_api_reset = document.getElementById("keterangan_api_reset");
+                keterangan_api_reset.innerHTML = "Gagal melakukan Reset Event.";
+            }
+            $('#modal-api-reset').modal('show');
+        }
+    };
+    var send_position = typeof id_position !== "undefined" ? "&id_event=" + id_position : "";
+    xmlhttp.open("POST","https://ocr-solution.id:7000/ocrapi/ocr/reset_all");
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("username=Admin&password=admin&token=e3afed0047b08059d0fada10f400c1e535ce60f4312d5e5448020201213213232" + send_position);
+} 
 
 function cari(string_search){
     var xmlhttp = new XMLHttpRequest();
