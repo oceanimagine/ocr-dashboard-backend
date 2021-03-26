@@ -38,14 +38,13 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
     <thead>                  
         <tr>
             <th style="width: 10px">No</th>
-            <th>Open Position</th>
-            <th>Sent Amount</th>
-            <th>Done Amount</th>
-            <th>Applicant Amount</th>
-            <th>Callback</th>
-            <th>Reset</th>
-            <th>Action</th>
-            <th>Logs</th>
+            <th style="text-align: center;">Open Position</th>
+            <th style="text-align: center;">Sent Amount</th>
+            <th style="text-align: center;">Done Amount</th>
+            <th style="text-align: center;">Applicant Amount</th>
+            <th style="text-align: center;">Reset</th>
+            <th style="text-align: center;">Action</th>
+            <th style="text-align: center;">Logs</th>
         </tr>
     </thead>
     <tbody>
@@ -93,7 +92,6 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_sent; ?></td>
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
                     <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
-                    <td><a href="https://ocr-solution.id:7000/ocrapi/callback-tambahan.php?id_op=<?php echo $hasil_openposition['id']; ?>" target="_blank">Hit Callback</a></td>
                     <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
                     <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
@@ -104,7 +102,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         } else {
             ?>
             <tr>
-                <td colspan="7">Belum ada data Open Position.</td>
+                <td colspan="8">Belum ada data Open Position.</td>
             </tr>  
             <?php 
             
