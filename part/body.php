@@ -48,13 +48,19 @@
                                         <?php if($page_header == "openposition"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="reset();">Reset All</button>
                                         <?php } ?>
+                                        <?php if($page_header == "form-pelamar"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-add';">Add Applicant</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-add"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
                                         <?php } ?>
                                     </div>
                                 </div>
                             </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <div class="tab-content p-0" style="overflow: hidden;">
+                            <div class="tab-content p-0" style="overflow-y: hidden; overflow-x: hidden;">
                                 <!-- Morris chart - Sales -->
                                 <?php
                                 // put your code here

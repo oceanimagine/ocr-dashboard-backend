@@ -6,6 +6,26 @@ if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
     header("location: login.php");
 }
 
+function get_hapus($param){
+    $address = 0;
+    $param_s = (string) $param;
+    while(isset($param_s{$address})){
+        if(substr($param_s, $address, strlen("hapus")) == "hapus"){
+            return true;
+        }
+        $address++;
+    }
+    return false;
+}
+
+if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
+    $page = isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "";
+    if (file_exists("page/module-" . $page . ".php")) {
+        include_once "page/module-" . $page . ".php";
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +53,7 @@ if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
         <!-- summernote -->
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     </head>
@@ -85,6 +106,12 @@ if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
                     document.location = url_hapus;
                 }
             };
+            $( "#tanggal_lahir" ).datepicker({
+                dateFormat:"yy-mm-dd",
+                changeYear:true,
+                changeMonth: true,
+                yearRange: "1920:2000"
+            });
         });
         
         function konfirmasi(url){
