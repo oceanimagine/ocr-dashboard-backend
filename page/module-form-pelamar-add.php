@@ -174,6 +174,14 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
     </div>
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-lg-2">
+            <label for="ipk" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">IPK</label>
+        </div>
+        <div class="col-lg-10">
+            <input placeholder="IPK" autocomplete="off" type="text" name="ipk" id="ipk" class="form-control" value="<?php echo $ipk; ?>" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
             <label for="file_ktp" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">File KTP</label>
         </div>
         <div class="col-lg-10">

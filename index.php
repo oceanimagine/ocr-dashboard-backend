@@ -53,7 +53,7 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
         <!-- summernote -->
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="dist/css/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     </head>
