@@ -54,6 +54,12 @@
                                         <?php if($page_header == "form-pelamar-add"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
                                         <?php } ?>
+                                        <?php if($page_header == "form-jurusan"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-jurusan-add';">Add Jurusan</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-universitas"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-universitas-add';">Add Universitas</button>
+                                        <?php } ?>
                                         <?php } ?>
                                     </div>
                                 </div>

@@ -38,6 +38,99 @@ if(isset($_POST['daftar_perusahaan']) && $_POST['daftar_perusahaan'] == "Edit"){
     }
 }
 
+
+// Add Universitas
+if(isset($_POST['daftar_universitas']) && $_POST['daftar_universitas'] == "Input Universitas"){
+    $universitas = mysqli_real_escape_string($connect, $_POST['nama_universitas']);
+    
+    $query_hapus = mysqli_query($connect, "select universitas from tbl_universitas where universitas = '".$universitas."'");
+    if(mysqli_num_rows($query_hapus) == 0){
+        $nama_file_ktp = "";
+
+        mysqli_query($connect, "
+            insert into tbl_universitas (
+                universitas
+            ) values (
+                '".$universitas."'
+            )
+        ");
+        if(mysqli_affected_rows($connect) > 0){
+            $_SESSION['count'] = 1;
+            $_SESSION['keterangan'] = "Berhasil Insert Data Universitas.";
+            header("location: index.php?page=form-universitas");
+        }
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Data Universitas Telah ada.";
+        header("location: index.php?page=form-universitas");
+    }
+}
+
+// update universitas
+if(isset($_POST['daftar_universitas']) && $_POST['daftar_universitas'] == "Update Universitas"){
+    $universitas = mysqli_real_escape_string($connect, $_POST['nama_universitas']);
+    mysqli_query($connect, "
+        update tbl_universitas set
+            universitas = '".$universitas."'
+        where id = '".mysqli_real_escape_string($connect, $_GET['id'])."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Update Data Universitas.";
+        header("location: index.php?page=form-universitas");
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Update Data Universitas.";
+        header("location: index.php?page=form-universitas");
+    }
+}
+
+// Add Jurusan
+if(isset($_POST['daftar_jurusan']) && $_POST['daftar_jurusan'] == "Input Jurusan"){
+    $jurusan = mysqli_real_escape_string($connect, $_POST['nama_jurusan']);
+    
+    $query_hapus = mysqli_query($connect, "select universitas from tbl_jurusan where jurusan = '".$jurusan."'");
+    if(mysqli_num_rows($query_hapus) == 0){
+        $nama_file_ktp = "";
+
+        mysqli_query($connect, "
+            insert into tbl_jurusan (
+                jurusan
+            ) values (
+                '".$jurusan."'
+            )
+        ");
+        if(mysqli_affected_rows($connect) > 0){
+            $_SESSION['count'] = 1;
+            $_SESSION['keterangan'] = "Berhasil Insert Data Jurusan.";
+            header("location: index.php?page=form-jurusan");
+        }
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Data Jurusan Telah ada.";
+        header("location: index.php?page=form-jurusan");
+    }
+}
+
+// update jurusan
+if(isset($_POST['daftar_jurusan']) && $_POST['daftar_jurusan'] == "Update Jurusan"){
+    $jurusan = mysqli_real_escape_string($connect, $_POST['nama_jurusan']);
+    mysqli_query($connect, "
+        update tbl_jurusan set
+            jurusan = '".$jurusan."'
+        where id = '".mysqli_real_escape_string($connect, $_GET['id'])."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Update Data Jurusan.";
+        header("location: index.php?page=form-jurusan");
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Update Data Jurusan.";
+        header("location: index.php?page=form-jurusan");
+    }
+}
+
 // Add Pelamar
 if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar"){
     $id_position = mysqli_real_escape_string($connect, $_POST['id_position']);
