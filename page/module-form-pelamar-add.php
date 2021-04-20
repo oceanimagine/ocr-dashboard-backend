@@ -191,7 +191,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
     </div>
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-lg-2">
-            <label for="file_ijazah" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">File Ijazah</label>
+            <label for="file_ijazah" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">File Transkrip Nilai</label>
         </div>
         <div class="col-lg-10">
             <?php echo $nama_file_ijazah; ?>
