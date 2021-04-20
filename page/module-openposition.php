@@ -170,7 +170,7 @@ function reset(id_position){
     var send_position = typeof id_position !== "undefined" ? "&id_event=" + id_position : "";
     xmlhttp.open("POST","https://ocr-solution.id:7000/ocrapi/ocr/reset_all");
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("username=Admin&password=admin&token=e3afed0047b08059d0fada10f400c1e535ce60f4312d5e5448020201213213232" + send_position);
+    xmlhttp.send("username=AdminReset&password=admin&token=7936630f3a97a4cc16279fefbb10a6280d3ddc57ed9aeb7138620210420140003" + send_position);
 } 
 
 function cari(string_search){
