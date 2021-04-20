@@ -22,7 +22,7 @@ $base_url_action_edit = "form-jurusan-add";
 $base_url_action_hapus = "form-jurusan-hapus";
 
 $search = isset($_GET['q']) && $_GET['q'] != "" ? "
-    where 
+    and 
         jurusan like '%".mysqli_real_escape_string($connect, urldecode($_GET['q']))."%'
     " : "";
 $q = isset($_GET['q']) && $_GET['q'] != "" ? "&q=" . urlencode($_GET['q']) : "";
@@ -50,7 +50,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         
         $halaman = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeric($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
         $query_jumlah_jurusan = mysqli_query($connect, "
-            select * from tbl_jurusan
+            select * from tbl_jurusan where id != '99999'
         " . $search);
         $jumlah_jurusan = mysqli_num_rows($query_jumlah_jurusan);
         $batas_data = 10;
@@ -76,7 +76,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         }
         
         $query_jurusan = mysqli_query($connect, "
-            select * from tbl_jurusan " . $search . " order by jurusan asc limit $start, $batas_data");
+            select * from tbl_jurusan where id != '99999' " . $search . " order by jurusan asc limit $start, $batas_data");
         if(mysqli_num_rows($query_jurusan) > 0){
             $no = $start + 1;
             while($hasil_jurusan = mysqli_fetch_array($query_jurusan)){
