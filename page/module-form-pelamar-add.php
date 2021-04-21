@@ -29,6 +29,7 @@ $jurusan = "";
 $ipk = "";
 $nama_file_ktp = "";
 $nama_file_ijazah = "";
+$jenis_kelamin = "";
 $button_label = "Input Pelamar";
 if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
     $id = mysqli_real_escape_string($connect, $_GET['id']);
@@ -45,6 +46,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         $universitas = $hasil_tampil['universitas'];
         $jurusan = $hasil_tampil['jurusan'];
         $ipk = $hasil_tampil['ipk'];
+        $jenis_kelamin = $hasil_tampil['jenis_kelamin'];
         if($hasil_tampil['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_tampil['file_ktp'])){
             $nama_file_ktp = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
@@ -95,6 +97,18 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         </div>
         <div class="col-lg-10">
             <input placeholder="Nama Pelamar" type="text" id="nama_pelamar" name="nama_pelamar" class="form-control" value="<?php echo $nama_pelamar; ?>" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
+            <label for="jenis_kelamin" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Jenis Kelamin</label>
+        </div>
+        <div class="col-lg-10">
+            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                <option value="">PILIH</option>
+                <option value="laki-laki" <?php echo $jenis_kelamin == 'laki-laki' ? " selected='selected'" : ""; ?>>Laki Laki</option>
+                <option value="perempuan" <?php echo $jenis_kelamin == 'perempuan' ? " selected='selected'" : ""; ?>>Perempuan</option>
+            </select>
         </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">

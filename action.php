@@ -142,6 +142,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
     $universitas = mysqli_real_escape_string($connect, $_POST['universitas']);
     $jurusan = mysqli_real_escape_string($connect, $_POST['jurusan']);
     $ipk = mysqli_real_escape_string($connect, $_POST['ipk']);
+    $jenis_kelamin = mysqli_real_escape_string($connect, $_POST['jenis_kelamin']);
     
     $query_hapus = mysqli_query($connect, "select nik from tbl_pelamar where nik = '".$nik."'");
     if(mysqli_num_rows($query_hapus) == 0){
@@ -179,7 +180,8 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 jurusan,
                 ipk,
                 file_ktp,
-                file_ijazah
+                file_ijazah,
+                jenis_kelamin
             ) values (
                 '".$id_position."',
                 '".$nama_pelamar."',
@@ -191,7 +193,8 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 '".$jurusan."',
                 '".$ipk."',
                 '".$nama_file_ktp."',
-                '".$nama_file_ijazah."'
+                '".$nama_file_ijazah."',
+                '".$jenis_kelamin."'
             )
         ");
         if(mysqli_affected_rows($connect) > 0){
@@ -217,7 +220,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
     $universitas = mysqli_real_escape_string($connect, $_POST['universitas']);
     $jurusan = mysqli_real_escape_string($connect, $_POST['jurusan']);
     $ipk = mysqli_real_escape_string($connect, $_POST['ipk']);
-    
+    $jenis_kelamin = mysqli_real_escape_string($connect, $_POST['jenis_kelamin']);
     $nama_file_ktp_temp = mysqli_real_escape_string($connect, $_POST['file_ktp_hidden']);
     $nama_file_ktp = "";
     if(isset($_FILES['file_ktp']) && is_array($_FILES['file_ktp']) && (isset($_FILES['file_ktp']['name']) && $_FILES['file_ktp']['name'] != "")){
@@ -266,7 +269,8 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             jurusan = '".$jurusan."',
             ipk = '".$ipk."',
             file_ktp = '".$nama_file_ktp."',
-            file_ijazah = '".$nama_file_ijazah."'
+            file_ijazah = '".$nama_file_ijazah."',
+            jenis_kelamin = '".$jenis_kelamin."'
         where id = '".$_GET['id']."'
     ");
     if(mysqli_affected_rows($connect) > 0){

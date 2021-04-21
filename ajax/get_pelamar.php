@@ -25,6 +25,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="width: 10px; vertical-align: middle;">No</th>
             <th style="text-align: center; vertical-align: middle;">Action</th>
             <th style="text-align: center; vertical-align: middle;">Position</th>
+            <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
             <th style="text-align: center; vertical-align: middle;">Nama Pelamar</th>
             <th style="text-align: center; vertical-align: middle;">NIK</th>
             <th style="text-align: center; vertical-align: middle;">Umur</th>
@@ -56,7 +57,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 tanggal_lahir, 
                 ipk,
                 file_ktp,
-                file_ijazah
+                file_ijazah,
+                jenis_kelamin
             from tbl_pelamar
         ) a" . $search);
         $jumlah_pelamar = mysqli_num_rows($query_jumlah_pelamar);
@@ -97,7 +99,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     tanggal_lahir, 
                     ipk,
                     file_ktp,
-                    file_ijazah
+                    file_ijazah,
+                    jenis_kelamin
                 from tbl_pelamar
             ) a " . $search . " order by id_position asc, nama_pelamar asc limit $start, $batas_data");
         if(mysqli_num_rows($query_pelamar) > 0){
@@ -135,6 +138,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                         <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_pelamar['id']; ?>');" style="text-decoration: none;">Hapus</a>
                     </td>
                     <td><?php echo $hasil_position['open_position']; ?></td>
+                    <td><?php echo $hasil_pelamar['jenis_kelamin']; ?></td>
                     <td><?php echo $hasil_pelamar['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_pelamar['nik']; ?></td>
                     <td><?php echo $hasil_pelamar['umur']; ?></td>
