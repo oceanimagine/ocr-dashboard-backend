@@ -30,14 +30,16 @@ $ipk = "";
 $nama_file_ktp = "";
 $nama_file_ijazah = "";
 $jenis_kelamin = "";
+$username = "";
+$password = "";
+$nama_file_ijazah_sertifikat = "";
 $button_label = "Input Pelamar";
 if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
     $id = mysqli_real_escape_string($connect, $_GET['id']);
-    $query_tampil = mysqli_query($connect, "select * from tbl_pelamar where id = '".$id."'");
+    $query_tampil = mysqli_query($connect, "select * from tbl_pelamar_master where id = '".$id."'");
     if(mysqli_num_rows($query_tampil) > 0){
         $button_label = "Update Pelamar";
         $hasil_tampil = mysqli_fetch_array($query_tampil);
-        $id_position = $hasil_tampil['id_position'];
         $nama_pelamar = $hasil_tampil['nama_pelamar'];
         $nik = $hasil_tampil['nik'];
         $umur = $hasil_tampil['umur'];
@@ -47,6 +49,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         $jurusan = $hasil_tampil['jurusan'];
         $ipk = $hasil_tampil['ipk'];
         $jenis_kelamin = $hasil_tampil['jenis_kelamin'];
+        $nama_file_ktp = "<input type='hidden' name='file_ktp_hidden' />";
         if($hasil_tampil['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_tampil['file_ktp'])){
             $nama_file_ktp = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
@@ -55,6 +58,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
                 </div>
             "; 
         }
+        $nama_file_ijazah = "<input type='hidden' name='file_ijazah_hidden' />";
         if($hasil_tampil['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_tampil['file_ijazah'])){
             $nama_file_ijazah = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
@@ -63,6 +67,15 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
                 </div>
             "; 
         }
+        $nama_file_ijazah_sertifikat = " <input type='hidden' name='file_ijazah_sertifikat_hidden' />";
+        if($hasil_tampil['file_ijazah_sertifikat'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $hasil_tampil['file_ijazah_sertifikat'])){
+            $nama_file_ijazah_sertifikat = "
+                <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
+                    <a href='../ocrapi/upload/ijazah_sertifikat/".$hasil_tampil['file_ijazah_sertifikat']."' target='_blank'>Download</a>
+                    <input type='hidden' name='file_ijazah_sertifikat_hidden' value='".$hasil_tampil['file_ijazah_sertifikat']."' />
+                </div>
+            "; 
+        }  
         
     }
 }
@@ -71,26 +84,6 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
 ?>
 
 <form method="POST" enctype="multipart/form-data">
-    <div class="row" style="margin-bottom: 10px;">
-        <div class="col-lg-2">
-            <label for="id_position" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Posisi Lamaran</label>
-        </div>
-        <div class="col-lg-10">
-            <select name="id_position" id="id_position" class="form-control">
-                <option value="">PILIH</option>
-                <?php 
-
-                $query_position = mysqli_query($connect, "select id, open_position from tbl_event");
-                if(mysqli_num_rows($query_position) > 0){
-                    while($hasil_position = mysqli_fetch_array($query_position)){
-                        $selected = $id_position == $hasil_position['id'] ? " selected='selected'" : "";
-                        echo "<option value='".$hasil_position['id']."'".$selected.">".$hasil_position['open_position']."</option>";
-                    }
-                }
-                ?>
-            </select>
-        </div>
-    </div>
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-lg-2">
             <label for="nama_pelamar" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Nama Pelamar</label>
@@ -196,6 +189,22 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
     </div>
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-lg-2">
+            <label for="username" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Username</label>
+        </div>
+        <div class="col-lg-10">
+            <input placeholder="Username" autocomplete="off" type="text" name="username" id="username" class="form-control" value="<?php echo $username; ?>" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
+            <label for="password" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Password</label>
+        </div>
+        <div class="col-lg-10">
+            <input placeholder="Password" autocomplete="off" type="password" name="password" id="password" class="form-control" value="<?php echo $password; ?>" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
             <label for="file_ktp" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">File KTP</label>
         </div>
         <div class="col-lg-10">
@@ -210,6 +219,15 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         <div class="col-lg-10">
             <?php echo $nama_file_ijazah; ?>
             <input type="file" name="file_ijazah" id="file_ijazah" class="form-control" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
+            <label for="file_ijazah_sertifikat" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">File Ijazah</label>
+        </div>
+        <div class="col-lg-10">
+            <?php echo $nama_file_ijazah_sertifikat; ?>
+            <input type="file" name="file_ijazah_sertifikat" id="file_ijazah_sertifikat" class="form-control" />
         </div>
     </div>
     <div class="row" style="margin-top: 25px;">

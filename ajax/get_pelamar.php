@@ -7,7 +7,6 @@ $base_url_action_hapus = "form-pelamar-hapus";
 
 $search = isset($_GET['q']) && $_GET['q'] != "" ? "
     where 
-        a.position like '%".mysqli_real_escape_string($connect, urldecode($_GET['q']))."%' or
         a.nama_pelamar like '%".mysqli_real_escape_string($connect, urldecode($_GET['q']))."%' or
         a.nik like '%".mysqli_real_escape_string($connect, urldecode($_GET['q']))."%' or
         a.umur like '%".mysqli_real_escape_string($connect, urldecode($_GET['q']))."%' or
@@ -24,7 +23,10 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         <tr>
             <th style="width: 10px; vertical-align: middle;">No</th>
             <th style="text-align: center; vertical-align: middle;">Action</th>
-            <th style="text-align: center; vertical-align: middle;">Position</th>
+            <th style="text-align: center; vertical-align: middle;">Open Position</th>
+            <th style="text-align: center; vertical-align: middle;">Sertifikasi Lainnya</th>
+            <th style="text-align: center; vertical-align: middle;">Ketrampilan Bahasa</th>
+            <th style="text-align: center; vertical-align: middle;">Ketrampilan Lainnya</th>
             <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
             <th style="text-align: center; vertical-align: middle;">Nama Pelamar</th>
             <th style="text-align: center; vertical-align: middle;">NIK</th>
@@ -35,7 +37,9 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="text-align: center; vertical-align: middle;">Jurusan</th>
             <th style="text-align: center; vertical-align: middle;">IPK</th>
             <th style="text-align: center; vertical-align: middle;">File KTP</th>
+            <th style="text-align: center; vertical-align: middle;">File Transkrip</th>
             <th style="text-align: center; vertical-align: middle;">File Ijazah</th>
+            <th style="text-align: center; vertical-align: middle;">File Transkrip Image</th>
         </tr>
     </thead>
     <tbody>
@@ -46,8 +50,6 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             select * from (
             select 
                 id,
-                (select open_position from tbl_event where id = id_position) position,
-                id_position,
                 universitas,
                 jurusan,
                 nama_pelamar,
@@ -58,8 +60,9 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 ipk,
                 file_ktp,
                 file_ijazah,
+                file_ijazah_sertifikat,
                 jenis_kelamin
-            from tbl_pelamar
+            from tbl_pelamar_master
         ) a" . $search);
         $jumlah_pelamar = mysqli_num_rows($query_jumlah_pelamar);
         $batas_data = 10;
@@ -88,8 +91,6 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             select * from (
                 select 
                     id,
-                    (select open_position from tbl_event where id = id_position) position,
-                    id_position,
                     universitas,
                     jurusan,
                     nama_pelamar,
@@ -100,15 +101,13 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     ipk,
                     file_ktp,
                     file_ijazah,
+                    file_ijazah_sertifikat,
                     jenis_kelamin
-                from tbl_pelamar
-            ) a " . $search . " order by id_position asc, nama_pelamar asc limit $start, $batas_data");
+                from tbl_pelamar_master
+            ) a " . $search . " order by nama_pelamar asc limit $start, $batas_data");
         if(mysqli_num_rows($query_pelamar) > 0){
             $no = $start + 1;
             while($hasil_pelamar = mysqli_fetch_array($query_pelamar)){
-                
-                $query_position = mysqli_query($connect, "select open_position from tbl_event where id = '".$hasil_pelamar['id_position']."'");
-                $hasil_position = mysqli_num_rows($query_position) > 0 ? mysqli_fetch_array($query_position) : array('open_position' => '<font style="font-family: consolas, monospace;">Undefined</font>');
                 
                 $query_universitas = mysqli_query($connect, "select universitas from tbl_universitas where id = '".$hasil_pelamar['universitas']."'");
                 $hasil_universitas = mysqli_num_rows($query_universitas) > 0 ? mysqli_fetch_array($query_universitas) : array('universitas' => '<font style="font-family: consolas, monospace;">Undefined</font>');
@@ -130,6 +129,13 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     $file_ijazah = "File Ijazah not found.";
                 }
                 
+                $file_ijazah_sertifikat = "";
+                if($hasil_pelamar['file_ijazah_sertifikat'] != "" && file_exists("../../ocrapi/upload/ijazah_sertifikat/" . $hasil_pelamar['file_ijazah_sertifikat'])){
+                    $file_ijazah_sertifikat = "<a href='../../ocrapi/upload/ijazah_sertifikat/".$hasil_pelamar['file_ijazah_sertifikat']."' target='_blank'>Download</a>"; 
+                } else {
+                    $file_ijazah_sertifikat = "File Ijazah not found.";
+                }
+                
                 ?>
                 <tr>
                     <td><?php echo $no; ?></td>
@@ -137,7 +143,18 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                         <a href="index.php?page=<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Edit</a> - 
                         <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_pelamar['id']; ?>');" style="text-decoration: none;">Hapus</a>
                     </td>
-                    <td><?php echo $hasil_position['open_position']; ?></td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-open-position-perperson&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-other-cert&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-languague-perperson&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-skill-perperson&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
                     <td><?php echo $hasil_pelamar['jenis_kelamin']; ?></td>
                     <td><?php echo $hasil_pelamar['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_pelamar['nik']; ?></td>
@@ -149,6 +166,10 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td><?php echo $hasil_pelamar['ipk']; ?></td>
                     <td><?php echo $file_ktp; ?></td>
                     <td><?php echo $file_ijazah; ?></td>
+                    <td><?php echo $file_ijazah_sertifikat; ?></td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-show-transkrip-image&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
                 </tr>
                 <?php
                 $no++;

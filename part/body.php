@@ -60,6 +60,25 @@
                                         <?php if($page_header == "form-universitas"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-universitas-add';">Add Universitas</button>
                                         <?php } ?>
+                                        <?php if($page_header == "form-pelamar-open-position-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-open-position-perperson-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add Open Position</button>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-open-position-perperson-add"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-open-position-perperson&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Back</button>
+                                        <?php } ?>  
+                                        <?php if($page_header == "form-pelamar-other-cert"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-languague-perperson&"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-languague-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-skill-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
                                         <?php } ?>
                                     </div>
                                 </div>
