@@ -228,18 +228,43 @@ function hapus_data(url){
     }
 }
 
-
+var array_search = [];
+var addrs_search = 0;
+var addrs_ajax = 0;
+var procs_ajax = 0;
 function cari(string_search){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-        if(this.readyState === 4 && this.status === 200){
-            var hasil_pelamar = document.getElementById("hasil_pelamar");
-            hasil_pelamar.innerHTML = this.responseText;
-            load_td();
-        }
-    };
-    xmlhttp.open("GET","ajax/get_pelamar.php?q=" + encodeURI(string_search));
-    xmlhttp.send(null);
+    array_search[addrs_search] = string_search;
+    console.log(array_search);
+    get_hasil();
+    addrs_search++;
+}
+
+function get_hasil(){
+    if(typeof array_search[addrs_ajax] !== "undefined" && !procs_ajax){
+        procs_ajax = 1;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState === 4 && this.status === 200){
+                var hasil_pelamar = document.getElementById("hasil_pelamar");
+                hasil_pelamar.innerHTML = this.responseText;
+                load_td();
+                procs_ajax = 0;
+                setTimeout(function(){
+                    get_hasil();
+                    addrs_ajax++;
+                }, 200);
+            }
+        };
+        xmlhttp.open("GET","ajax/get_pelamar.php?q=" + encodeURI(array_search[addrs_ajax]));
+        xmlhttp.send(null);
+    } else {
+        setTimeout(function(){
+            array_search = [];
+            addrs_search = 0;
+            addrs_ajax = 0;
+            procs_ajax = 0;
+        }, 1000);
+    }
 }
 
 
