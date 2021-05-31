@@ -119,6 +119,10 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
             $('#modal-konfirmasi').modal('show');
         }
         
+        function load_td(){
+            
+        }
+        
         </script>
     </body>
 </html>
