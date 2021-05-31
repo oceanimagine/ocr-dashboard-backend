@@ -79,7 +79,7 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
         } else {
             ?>
             <tr>
-                <td colspan="7">Belum ada data Open Position.</td>
+                <td colspan="8">Belum ada data Open Position.</td>
             </tr>  
             <?php 
             
