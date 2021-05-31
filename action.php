@@ -195,23 +195,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 jenis_kelamin,
                 username,
                 password,
-                file_ijazah_sertifikat,
-                ktp_confidence_nik,
-                ktp_confidence_nama,
-                ktp_confidence_tanggal_lahir,
-                ktp_confidence_tempat_lahir,
-                ktp_result_nik,
-                ktp_result_nama,
-                ktp_result_tanggal_lahir,
-                ktp_result_tempat_lahir,
-                ijazah_confidence_nama,
-                ijazah_confidence_universitas,
-                ijazah_confidence_jurusan,
-                ijazah_confidence_ipk,
-                ijazah_result_nama,
-                ijazah_result_universitas,
-                ijazah_result_jurusan,
-                ijazah_result_ipk
+                file_ijazah_sertifikat
             ) values (
                 '".$nama_pelamar."',
                 '".$nik."',
@@ -226,26 +210,44 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 '".$jenis_kelamin."',
                 '".$username."',
                 '".md5($password)."',
-                '".$nama_file_ijazah_sertifikat."',
-                '0',
-                '0',
-                '0',
-                '0',
-                '',
-                '',
-                '',
-                '',
-                '0',
-                '0',
-                '0',
-                '0',
-                '',
-                '',
-                '',
-                ''
+                '".$nama_file_ijazah_sertifikat."'
                 
             )
         ");
+        echo  "
+            insert into tbl_pelamar_master (
+                nama_pelamar,
+                nik,
+                umur,
+                tempat_lahir,
+                tanggal_lahir,
+                universitas,
+                jurusan,
+                ipk,
+                file_ktp,
+                file_ijazah,
+                jenis_kelamin,
+                username,
+                password,
+                file_ijazah_sertifikat
+            ) values (
+                '".$nama_pelamar."',
+                '".$nik."',
+                '".$umur."',
+                '".$tempat_lahir."',
+                '".$tanggal_lahir."',
+                '".$universitas."',
+                '".$jurusan."',
+                '".$ipk."',
+                '".$nama_file_ktp."',
+                '".$nama_file_ijazah."',
+                '".$jenis_kelamin."',
+                '".$username."',
+                '".md5($password)."',
+                '".$nama_file_ijazah_sertifikat."'
+                
+            )
+        ";
         if(mysqli_affected_rows($connect) > 0){
             $_SESSION['count'] = 1;
             $_SESSION['keterangan'] = "Berhasil Insert Data Pelamar.";
