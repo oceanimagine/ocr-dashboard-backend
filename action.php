@@ -195,7 +195,8 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 jenis_kelamin,
                 username,
                 password,
-                file_ijazah_sertifikat
+                file_ijazah_sertifikat,
+                token
             ) values (
                 '".$nama_pelamar."',
                 '".$nik."',
@@ -210,45 +211,11 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 '".$jenis_kelamin."',
                 '".$username."',
                 '".md5($password)."',
-                '".$nama_file_ijazah_sertifikat."'
+                '".$nama_file_ijazah_sertifikat."',
+                ''
                 
             )
         ");
-        echo  "
-            insert into tbl_pelamar_master (
-                nama_pelamar,
-                nik,
-                umur,
-                tempat_lahir,
-                tanggal_lahir,
-                universitas,
-                jurusan,
-                ipk,
-                file_ktp,
-                file_ijazah,
-                jenis_kelamin,
-                username,
-                password,
-                file_ijazah_sertifikat
-            ) values (
-                '".$nama_pelamar."',
-                '".$nik."',
-                '".$umur."',
-                '".$tempat_lahir."',
-                '".$tanggal_lahir."',
-                '".$universitas."',
-                '".$jurusan."',
-                '".$ipk."',
-                '".$nama_file_ktp."',
-                '".$nama_file_ijazah."',
-                '".$jenis_kelamin."',
-                '".$username."',
-                '".md5($password)."',
-                '".$nama_file_ijazah_sertifikat."'
-                
-            )
-        ";
-        exit();
         if(mysqli_affected_rows($connect) > 0){
             $_SESSION['count'] = 1;
             $_SESSION['keterangan'] = "Berhasil Insert Data Pelamar.";
