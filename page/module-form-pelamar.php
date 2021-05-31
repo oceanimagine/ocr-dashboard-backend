@@ -234,7 +234,6 @@ var addrs_ajax = 0;
 var procs_ajax = 0;
 function cari(string_search){
     array_search[addrs_search] = string_search;
-    console.log(array_search);
     get_hasil();
     addrs_search++;
 }
@@ -248,8 +247,8 @@ function get_hasil(){
                 var hasil_pelamar = document.getElementById("hasil_pelamar");
                 hasil_pelamar.innerHTML = this.responseText;
                 load_td();
-                procs_ajax = 0;
                 setTimeout(function(){
+                    procs_ajax = 0;
                     get_hasil();
                     addrs_ajax++;
                 }, 200);
@@ -257,13 +256,6 @@ function get_hasil(){
         };
         xmlhttp.open("GET","ajax/get_pelamar.php?q=" + encodeURI(array_search[addrs_ajax]));
         xmlhttp.send(null);
-    } else {
-        setTimeout(function(){
-            array_search = [];
-            addrs_search = 0;
-            addrs_ajax = 0;
-            procs_ajax = 0;
-        }, 1000);
     }
 }
 
