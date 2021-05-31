@@ -248,6 +248,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 
             )
         ";
+        exit();
         if(mysqli_affected_rows($connect) > 0){
             $_SESSION['count'] = 1;
             $_SESSION['keterangan'] = "Berhasil Insert Data Pelamar.";
