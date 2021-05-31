@@ -225,7 +225,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 '".$nama_file_ijazah."',
                 '".$jenis_kelamin."',
                 '".$username."',
-                '".$password."',
+                '".md5($password)."',
                 '".$nama_file_ijazah_sertifikat."',
                 '0',
                 '0',
