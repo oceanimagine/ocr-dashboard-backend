@@ -145,7 +145,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
     $password = mysqli_real_escape_string($connect, $_POST['password']);
     $jenis_kelamin = mysqli_real_escape_string($connect, $_POST['jenis_kelamin']);
     
-    $query_hapus = mysqli_query($connect, "select nik from tbl_pelamar where nik = '".$nik."'");
+    $query_hapus = mysqli_query($connect, "select nik from tbl_pelamar_master where nik = '".$nik."'");
     if(mysqli_num_rows($query_hapus) == 0){
         $nama_file_ktp = "";
         if(isset($_FILES['file_ktp']) && is_array($_FILES['file_ktp'])){
