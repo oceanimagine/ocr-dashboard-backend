@@ -284,7 +284,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
         $expl = explode(".", $name);
         $type = $expl[sizeof($expl) - 1];
         $nama_file_ijazah_sertifikat = "IJAZAHSERTIFIKAT" . date("Ymd") . date("His") . "." . $type;
-        if(move_uploaded_file($temp, "../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah)){
+        if(move_uploaded_file($temp, "../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat)){
             if($nama_file_ijazah_temp != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp)){
                 unlink("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp);
             }
