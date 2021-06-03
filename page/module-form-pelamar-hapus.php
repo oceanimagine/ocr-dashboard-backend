@@ -11,6 +11,9 @@ if(isset($_GET['idhapus']) && $_GET['idhapus'] != "" && is_numeric($_GET['idhapu
         if($hasil_hapus['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_hapus['file_ijazah'])){
             unlink("../ocrapi/upload/ijazah/" . $hasil_hapus['file_ijazah']);
         }
+        if($hasil_hapus['file_ijazah_sertifikat'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $hasil_hapus['file_ijazah_sertifikat'])){
+            unlink("../ocrapi/upload/ijazah_sertifikat/" . $hasil_hapus['file_ijazah_sertifikat']);
+        }
         mysqli_query($connect, "delete from tbl_pelamar_master where id = '".$idhapus."'");
         if(mysqli_affected_rows($connect) > 0){
             $_SESSION['count'] = 2;
