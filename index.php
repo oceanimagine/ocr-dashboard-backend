@@ -119,10 +119,11 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
             url_hapus = url;
             $('#modal-konfirmasi').modal('show');
         }
-        
+        <?php if(isset($_GET['page']) && $_GET['page'] != "openposition"){ ?>
         function load_td(){
             
         }
+        <?php } ?>
         
         function numberFormat(labelValue) {
             return Math.abs(Number(labelValue)) >= 1.0e12 ?
