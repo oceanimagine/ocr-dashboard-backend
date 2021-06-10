@@ -167,6 +167,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah = "IJAZAH" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah/" . $nama_file_ijazah);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah);
         }
         
         $nama_file_ijazah_sertifikat = "";
@@ -270,6 +271,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_temp != "" && file_exists("../ocrapi/upload/ijazah/" . $nama_file_ijazah_temp)){
                 unlink("../ocrapi/upload/ijazah/" . $nama_file_ijazah_temp);
             }
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah);
         }
     } else {
         $nama_file_ijazah = $nama_file_ijazah_temp;
