@@ -257,6 +257,41 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
             });
         }
         
+        function create_batang_ajax(id_active, categories, series_) {
+            Highcharts.chart(id_active, {
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    type: 'column',
+                    backgroundColor: "transparent"
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: categories,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0,
+                        borderWidth: 0
+                    }
+                },
+                series: series_
+            });
+        }
+        
         function create_batang_horizontal(id_name, categories, series) {
             Highcharts.chart(id_name, {
                 colors: ["#00BFFF", "#ffc107", "#8bc34a", "#DAA520"],
@@ -362,6 +397,20 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
                 }]
             });
             console.log("selesai chart radial");
+        }
+
+        if(document.getElementById('chart_tren_abs_2')){
+            $(function(){
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if(this.status === 200 && this.readyState === 4){
+                        var json = JSON.parse(this.responseText);
+                        create_batang_ajax('chart_tren_abs_2', json[0], json[1]);
+                    }
+                };
+                xmlhttp.open("GET", "ajax/get_akumulasi.php");
+                xmlhttp.send(null);
+            });
         }
 
         if(document.getElementById('chart_tren_abs_1') && 
