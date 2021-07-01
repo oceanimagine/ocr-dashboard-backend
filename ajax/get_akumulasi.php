@@ -35,7 +35,7 @@ $name_judul = array(
     'Akumulasi Semua'
 );
 
-$nama_tabel = "tbl_id_document_collection_log_backup";
+$nama_tabel = "tbl_id_document_collection_log";
 
 $categories = array();
 for($i = $begin_awal; $i <= $end_awal; $i->modify('+1 day')){
