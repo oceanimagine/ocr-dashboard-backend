@@ -32,7 +32,7 @@ if(mysqli_num_rows($query_nama_file_transkrip) > 0){
             $nama_file_transkrip_ = $nama_file_transkrip_ . $explode_[$i];
         }
     }
-    if(is_dir("../ocrapi/upload/ijazah/imageconvert/" . $nama_file_transkrip_ . "/")){
+    if($nama_file_transkrip_ != "" && is_dir("../ocrapi/upload/ijazah/imageconvert/" . $nama_file_transkrip_ . "/")){
         $scandir_ = scandir("../ocrapi/upload/ijazah/imageconvert/" . $nama_file_transkrip_ . "/");
         for($i = 2; $i < sizeof($scandir_); $i++){
             if($scandir_[$i] != "Result-All.jpg"){
