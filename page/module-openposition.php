@@ -41,6 +41,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="text-align: center;">Open Position</th>
             <th style="text-align: center;">Sent Amount</th>
             <th style="text-align: center;">Done Amount</th>
+            <th style="text-align: center;">Normal Amount</th>
             <th style="text-align: center;">Applicant Amount</th>
             <th style="text-align: center;">Reset</th>
             <th style="text-align: center;">Action</th>
@@ -83,6 +84,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 $jumlah_done = mysqli_num_rows($query_done_);
                 $query_sent_ = mysqli_query($connect, "select id_position from tbl_document_track where id_position = '".$hasil_openposition['id']."'");
                 $jumlah_sent = mysqli_num_rows($query_sent_);
+                $query_normal_ = mysqli_query($connect, "select id_position from tbl_document_track where id_position = '".$hasil_openposition['id']."' and status_ocr = 'Done' and document_flagging = 'normal'");
+                $jumlah_normal = mysqli_num_rows($query_normal_);
                 $query_applicant_ = mysqli_query($connect, "select count(id_position) jumlah_pelamar from tbl_pelamar where id_position = '".$hasil_openposition['id']."'");
                 $jumlah_applicant = mysqli_fetch_array($query_applicant_);
                 ?>
@@ -91,6 +94,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td><?php echo $hasil_openposition['open_position']; ?></td>
                     <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_sent; ?></td>
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
+                    <td class="row_normal" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_normal; ?></td>
                     <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
                     <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
@@ -148,6 +152,11 @@ function load_td(){
         if(get_td[i].getAttribute("class") === "row_done"){
             var id_data = get_td[i].getAttribute("id_data");
             ajax_sent(get_td[i], "get_done.php?id_position=" + id_data);
+        }
+        if(get_td[i].getAttribute("class") === "row_normal"){
+            console.log("Row Normal");
+            var id_data = get_td[i].getAttribute("id_data");
+            ajax_sent(get_td[i], "get_normal.php?id_position=" + id_data);
         }
     }
 }
