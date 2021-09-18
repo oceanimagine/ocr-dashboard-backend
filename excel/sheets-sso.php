@@ -228,7 +228,7 @@ function mime2ext($mime) {
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
 
-include_once "../koneksi.php";
+include_once __DIR__."/../koneksi.php";
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', true);
@@ -419,7 +419,7 @@ if ($xlsx) {
                         $file_ext = mime2ext($mime_type);
                         $nama_file_ijazah = "IJAZAH" . date("Ymd") . date("His") . "." . $file_ext;
                         file_put_contents("../../ocrapi/upload/ijazah/".$nama_file_ijazah, $response);
-                        shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah);
+                        shell_exec("php /var/www/html/ocrapi/ SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah . " ijazah");
                         $exists_file_ijazah = true;
                     }
                 }
@@ -451,7 +451,7 @@ if ($xlsx) {
                         $file_ext = mime2ext($mime_type);
                         $nama_file_ijazah_s2 = "IJAZAHS2" . date("Ymd") . date("His") . "." . $file_ext;
                         file_put_contents("../../ocrapi/upload/ijazah_s2/".$nama_file_ijazah_s2, $response);
-                        shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah_s2 . " ijazah_s2");
+                        shell_exec("php /var/www/html/ocrapi/ SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2");
                         $exists_file_ijazah_s2 = true;
                     }
                 }
@@ -467,7 +467,7 @@ if ($xlsx) {
                         $file_ext = mime2ext($mime_type);
                         $nama_file_ijazah_sertifikat_s2 = "IJAZAHSERTIFIKATS2" . date("Ymd") . date("His") . "." . $file_ext;
                         file_put_contents("../../ocrapi/upload/ijazah_s2_sertifikat/".$nama_file_ijazah_sertifikat_s2, $response);
-                        shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
+                        shell_exec("php /var/www/html/ocrapi/ SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
                         $exists_file_ijazah_sertifikat_s2 = true;
                     }
                 }
