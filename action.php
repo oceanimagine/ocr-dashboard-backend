@@ -542,6 +542,7 @@ if(isset($_POST['upload_excel']) && $_POST['upload_excel'] == "Upload Excel"){
                     insert into tbl_proses_excel_log 
                     set nama_file = '".$name."'
                 ");
+                shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $name);
                 header("location: index.php?page=upload-sso-view");
                 exit();
             } else {
