@@ -358,12 +358,12 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
         }
         
         function chart_pie_radial(id_name, data){
+            /* 
             Highcharts.chart(id_name, {
                 chart: {
-                    plotBackgroundColor: null,
                     plotBorderWidth: 0,
                     height: 250,
-                    backgroundColor: 'transparent'
+                    type: 'pie'
                 },
                 title: {
                     text: '',
@@ -377,11 +377,12 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
                 },
                 plotOptions: {
                     pie: {
-                        center: ['50%', '50%'],
+                        allowPointSelect: true,
+                        cursor: 'pointer',
                         dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
                     }
                 },
                 legend: {
@@ -393,6 +394,45 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
                 series: [{
                     type: 'pie',
                     innerSize: '70%',
+                    data: data
+                }]
+            }); */
+        
+            Highcharts.chart(id_name, {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: '',
+                    style: {"fontSize":"90%"},
+                    verticalAlign: 'middle',
+                    x: -60,
+                    y: 0
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
                     data: data
                 }]
             });
@@ -492,6 +532,69 @@ if(get_hapus(isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "")){
                 338253100,
                 104330163 
             ]);
+            var categories_lingkaran = [
+                "2020-01",
+                "2020-02",
+                "2020-03",
+                "2020-04",
+                "2020-05",
+                "2020-06",
+                "2020-07",
+                "2020-08",
+                "2020-09",
+                "2020-10",
+                "2020-11",
+                "2020-12",
+                "2021-01",
+                "2021-02",
+                "2021-03",
+                "2021-04",
+                "2021-05"
+            ];
+
+            var series_lingkaran = [
+                6934683,
+                39358678,
+                43875805,
+                85926688,
+                251573435,
+                269670818,
+                167884600,
+                63837909,
+                32962960,
+                125579587,
+                143781685,
+                25120812,
+                13259792,
+                19850033,
+                201536044,
+                338253100,
+                104330163 
+            ];
+            var jumlah = 0;
+            for(var i = 0; i < series_lingkaran.length; i++){
+                jumlah = jumlah + series_lingkaran[i];
+            }
+            var persen = [];
+            var key_lingkaran = [];
+            for(var i = 0; i < series_lingkaran.length; i++){
+                persen[i] = (series_lingkaran[i] / jumlah) * 100;
+                key_lingkaran[i] = {};
+                key_lingkaran[i].name = categories_lingkaran[i];
+                key_lingkaran[i].y = (series_lingkaran[i] / jumlah) * 100;
+                key_lingkaran[i].color = '#' + Math.floor(Math.random()*16777215).toString(16);
+            }
+            var jumlah_persen = 0;
+            for(var i = 0; i < persen.length; i++){
+                jumlah_persen = jumlah_persen + persen[i];
+            }
+            console.log(persen);
+            console.log(jumlah_persen);
+            console.log(jumlah);
+            console.log(key_lingkaran);
+            chart_pie_radial('chart_tren_abs_4', key_lingkaran);
+        }
+        if(document.getElementById('chart_tren_abs_4')){
             var categories_lingkaran = [
                 "2020-01",
                 "2020-02",

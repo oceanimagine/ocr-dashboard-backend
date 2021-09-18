@@ -141,6 +141,9 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
     $universitas = mysqli_real_escape_string($connect, $_POST['universitas']);
     $jurusan = mysqli_real_escape_string($connect, $_POST['jurusan']);
     $ipk = mysqli_real_escape_string($connect, $_POST['ipk']);
+    $universitas_s2 = mysqli_real_escape_string($connect, $_POST['universitas_s2']);
+    $jurusan_s2 = mysqli_real_escape_string($connect, $_POST['jurusan_s2']);
+    $ipk_s2 = mysqli_real_escape_string($connect, $_POST['ipk_s2']);
     $username = mysqli_real_escape_string($connect, $_POST['username']);
     $password = mysqli_real_escape_string($connect, $_POST['password']);
     $jenis_kelamin = mysqli_real_escape_string($connect, $_POST['jenis_kelamin']);
@@ -179,6 +182,31 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah_sertifikat = "IJAZAHSERTIFIKAT" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat");
+        }
+        
+        $nama_file_ijazah_s2 = "";
+        if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2'])){
+            $file_ijazah_s2 = $_FILES['file_ijazah_s2'];
+            $temp = $file_ijazah_s2['tmp_name'];
+            $name = $file_ijazah_s2['name'];
+            $expl = explode(".", $name);
+            $type = $expl[sizeof($expl) - 1];
+            $nama_file_ijazah_s2 = "IJAZAHS2" . date("Ymd") . date("His") . "." . $type;
+            move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2");
+        }
+        
+        $nama_file_ijazah_sertifikat_s2 = "";
+        if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2'])){
+            $file_ijazah_sertifikat_s2 = $_FILES['file_ijazah_sertifikat_s2'];
+            $temp = $file_ijazah_sertifikat_s2['tmp_name'];
+            $name = $file_ijazah_sertifikat_s2['name'];
+            $expl = explode(".", $name);
+            $type = $expl[sizeof($expl) - 1];
+            $nama_file_ijazah_sertifikat_s2 = "IJAZAHSERTIFIKATS2" . date("Ymd") . date("His") . "." . $type;
+            move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
         }
 
         mysqli_query($connect, "
@@ -196,7 +224,12 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 jenis_kelamin,
                 username,
                 password,
-                file_ijazah_sertifikat
+                file_ijazah_sertifikat,
+                universitas_s2,
+                jurusan_s2,
+                ipk_s2,
+                file_ijazah_s2,
+                file_ijazah_sertifikat_s2
             ) values (
                 '".$nama_pelamar."',
                 '".$nik."',
@@ -211,7 +244,12 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
                 '".$jenis_kelamin."',
                 '".$username."',
                 '".md5($password)."',
-                '".$nama_file_ijazah_sertifikat."'
+                '".$nama_file_ijazah_sertifikat."',
+                '".$universitas_s2."',
+                '".$jurusan_s2."',
+                '".$ipk_s2."',
+                '".$nama_file_ijazah_s2."',
+                '".$nama_file_ijazah_sertifikat_s2."'
             )
         ");
         if(mysqli_affected_rows($connect) > 0){
@@ -236,6 +274,9 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
     $universitas = mysqli_real_escape_string($connect, $_POST['universitas']);
     $jurusan = mysqli_real_escape_string($connect, $_POST['jurusan']);
     $ipk = mysqli_real_escape_string($connect, $_POST['ipk']);
+    $universitas_s2 = mysqli_real_escape_string($connect, $_POST['universitas_s2']);
+    $jurusan_s2 = mysqli_real_escape_string($connect, $_POST['jurusan_s2']);
+    $ipk_s2 = mysqli_real_escape_string($connect, $_POST['ipk_s2']);
     $jenis_kelamin = mysqli_real_escape_string($connect, $_POST['jenis_kelamin']);
     $username = mysqli_real_escape_string($connect, $_POST['username']);
     $password = mysqli_real_escape_string($connect, $_POST['password']);
@@ -290,9 +331,44 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_temp != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp)){
                 unlink("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp);
             }
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat");
         }
     } else {
         $nama_file_ijazah_sertifikat = $nama_file_ijazah_sertifikat_temp;
+    }
+    
+    $nama_file_ijazah_s2 = "";
+    $nama_file_ijazah_s2_temp = mysqli_real_escape_string($connect, $_POST['file_ijazah_s2_hidden']);
+    if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2'])){
+        $file_ijazah_s2 = $_FILES['file_ijazah_s2'];
+        $temp = $file_ijazah_s2['tmp_name'];
+        $name = $file_ijazah_s2['name'];
+        $expl = explode(".", $name);
+        $type = $expl[sizeof($expl) - 1];
+        $nama_file_ijazah_s2 = "IJAZAHS2" . date("Ymd") . date("His") . "." . $type;
+        if(move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2)){
+            if($nama_file_ijazah_s2_temp != "" && file_exists("../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2)){
+                unlink("../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2_temp);
+            }
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2");
+        }
+    }
+
+    $nama_file_ijazah_sertifikat_s2 = "";
+    $nama_file_ijazah_sertifikat_s2_temp = mysqli_real_escape_string($connect, $_POST['file_ijazah_sertifikat_s2_hidden']);
+    if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2'])){
+        $file_ijazah_sertifikat_s2 = $_FILES['file_ijazah_sertifikat_s2'];
+        $temp = $file_ijazah_sertifikat_s2['tmp_name'];
+        $name = $file_ijazah_sertifikat_s2['name'];
+        $expl = explode(".", $name);
+        $type = $expl[sizeof($expl) - 1];
+        $nama_file_ijazah_sertifikat_s2 = "IJAZAHSERTIFIKATS2" . date("Ymd") . date("His") . "." . $type;
+        if(move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2)){
+            if($nama_file_ijazah_sertifikat_s2_temp != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2)){
+                unlink("../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2_temp);
+            }
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
+        }
     }
     
     mysqli_query($connect, "
@@ -310,7 +386,12 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             jenis_kelamin = '".$jenis_kelamin."',
             username = '".$username."',
             password = '".$password."',
-            file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."'
+            file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
+            universitas_s2 = '".$universitas_s2."',
+            jurusan_s2 = '".$jurusan_s2."',
+            ipk_s2 = '".$ipk_s2."',
+            file_ijazah_s2 = '".$nama_file_ijazah_s2."',
+            file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."'
         where id = '".$_GET['id']."'
     ");
     if(mysqli_affected_rows($connect) > 0){
@@ -440,5 +521,35 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
         $_SESSION['count'] = 1;
         $_SESSION['keterangan'] = "Open Position Sudah Dilamar.";
         header("location: index.php?page=form-pelamar-open-position-perperson&id=" . $id_pelamar_master);
+    }
+}
+
+// Upload Excel
+if(isset($_POST['upload_excel']) && $_POST['upload_excel'] == "Upload Excel"){
+    if(isset($_FILES['file_excel']) && is_array($_FILES['file_excel'])){
+        $name = $_FILES['file_excel']['name'];
+        $temp = $_FILES['file_excel']['tmp_name'];
+        if($name != "" && file_exists("excel/file/" . $name)){
+            $_SESSION['count'] = 2;
+            $_SESSION['keterangan'] = "File Excel dengan nama yang sama sudah pernah diupload.";
+            header("location: index.php?page=upload-sso");
+            exit();
+        } else {
+            if(move_uploaded_file($temp, "excel/file/" . $name)){
+                $_SESSION['count'] = 2;
+                $_SESSION['keterangan'] = "File Excel berhasil diupload.";
+                mysqli_query($connect, "
+                    insert into tbl_proses_excel_log 
+                    set nama_file = '".$name."'
+                ");
+                header("location: index.php?page=upload-sso-view");
+                exit();
+            } else {
+                $_SESSION['count'] = 2;
+                $_SESSION['keterangan'] = "File Excel gagal diupload.";
+                header("location: index.php?page=upload-sso-view");
+                exit();
+            }
+        }
     }
 }

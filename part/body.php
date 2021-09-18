@@ -60,6 +60,12 @@
                                         <?php if($page_header == "form-universitas"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-universitas-add';">Add Universitas</button>
                                         <?php } ?>
+                                        <?php if($page_header == "upload-sso-view"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=upload-sso';">Upload Excel</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "upload-sso"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=upload-sso-view';">Lihat Excel</button>
+                                        <?php } ?>
                                         <?php if($page_header == "form-pelamar-open-position-perperson"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-open-position-perperson-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add Open Position</button>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>

@@ -4,7 +4,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "project_ocr";
+$db = "project_ocr_trial";
 
 $connect = mysqli_connect($host, $user, $pass, $db);
 
