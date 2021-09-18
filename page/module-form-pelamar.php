@@ -140,7 +140,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 
                 $file_ktp = "";
                 if($hasil_pelamar['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_pelamar['file_ktp'])){
-                    $file_ktp = "<img src='../ocrapi/upload/ktp/".$hasil_pelamar['file_ktp']."' style='width: 200px;' />"; 
+                    // $file_ktp = "<img src='../ocrapi/upload/ktp/".$hasil_pelamar['file_ktp']."' style='width: 200px;' />"; 
+                    $file_ktp = "File Forbidden."; 
                 } else {
                     $file_ktp = "File KTP not found.";
                 }
