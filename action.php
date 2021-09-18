@@ -170,7 +170,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah = "IJAZAH" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah/" . $nama_file_ijazah);
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah . " > /dev/null 2>/dev/null &");
         }
         
         $nama_file_ijazah_sertifikat = "";
@@ -182,7 +182,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah_sertifikat = "IJAZAHSERTIFIKAT" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat);
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat > /dev/null 2>/dev/null &");
         }
         
         $nama_file_ijazah_s2 = "";
@@ -194,7 +194,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah_s2 = "IJAZAHS2" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2);
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2 > /dev/null 2>/dev/null &");
         }
         
         $nama_file_ijazah_sertifikat_s2 = "";
@@ -206,7 +206,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
             $type = $expl[sizeof($expl) - 1];
             $nama_file_ijazah_sertifikat_s2 = "IJAZAHSERTIFIKATS2" . date("Ymd") . date("His") . "." . $type;
             move_uploaded_file($temp, "../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2);
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat > /dev/null 2>/dev/null &");
         }
 
         mysqli_query($connect, "
@@ -312,7 +312,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_temp != "" && file_exists("../ocrapi/upload/ijazah/" . $nama_file_ijazah_temp)){
                 unlink("../ocrapi/upload/ijazah/" . $nama_file_ijazah_temp);
             }
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah);
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILE.php " . $nama_file_ijazah . " > /dev/null 2>/dev/null &");
         }
     } else {
         $nama_file_ijazah = $nama_file_ijazah_temp;
@@ -331,7 +331,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_temp != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp)){
                 unlink("../ocrapi/upload/ijazah_sertifikat/" . $nama_file_ijazah_sertifikat_temp);
             }
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat . " ijazah_sertifikat > /dev/null 2>/dev/null &");
         }
     } else {
         $nama_file_ijazah_sertifikat = $nama_file_ijazah_sertifikat_temp;
@@ -350,7 +350,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_s2_temp != "" && file_exists("../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2)){
                 unlink("../ocrapi/upload/ijazah_s2/" . $nama_file_ijazah_s2_temp);
             }
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2 > /dev/null 2>/dev/null &");
         }
     }
 
@@ -367,7 +367,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             if($nama_file_ijazah_sertifikat_s2_temp != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2)){
                 unlink("../ocrapi/upload/ijazah_s2_sertifikat/" . $nama_file_ijazah_sertifikat_s2_temp);
             }
-            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat");
+            shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat > /dev/null 2>/dev/null &");
         }
     }
     
@@ -542,7 +542,7 @@ if(isset($_POST['upload_excel']) && $_POST['upload_excel'] == "Upload Excel"){
                     insert into tbl_proses_excel_log 
                     set nama_file = '".$name."'
                 ");
-                shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $name);
+                shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $name . " > /dev/null 2>/dev/null &");
                 header("location: index.php?page=upload-sso-view");
                 exit();
             } else {
