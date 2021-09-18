@@ -312,7 +312,7 @@ if ($xlsx) {
                 $explode_space = explode(" ", $tanggal_apply);
                 $tanggal_maks = $explode_space[0];
                 $tanggal_active = str_replace("-", "", $explode_space[0]);
-                $nama_event = mysqli_real_escape_string($connect, "GPTP14/" . $tanggal_active);
+                $nama_event = mysqli_real_escape_string($connect, "GPTP14-" . $tanggal_active);
                 // Insert Event Per Tanggal
                 $query_cek_event = mysqli_query($connect, "select id from tbl_event where open_position = '".$nama_event."'");
                 if(mysqli_num_rows($query_cek_event) == 0){
