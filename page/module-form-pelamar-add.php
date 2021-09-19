@@ -57,6 +57,8 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         $jurusan_s2 = $hasil_tampil['jurusan_s2'];
         $ipk_s2 = $hasil_tampil['ipk_s2'];
         $jenis_kelamin = $hasil_tampil['jenis_kelamin'];
+        $username = $hasil_tampil['username'];
+        $password = $hasil_tampil['password'];
         $nama_file_ktp = "<input type='hidden' name='file_ktp_hidden' />";
         if($hasil_tampil['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_tampil['file_ktp'])){
             $nama_file_ktp = "
@@ -94,10 +96,10 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
             "; 
         }
         $nama_file_ijazah_sertifikat_s2 = "<input type='hidden' name='file_ijazah_sertifikat_s2_hidden' />";
-        if($hasil_tampil['file_ijazah_sertifikat_s2'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat_s2/" . $hasil_tampil['file_ijazah_sertifikat_s2'])){
+        if($hasil_tampil['file_ijazah_sertifikat_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $hasil_tampil['file_ijazah_sertifikat_s2'])){
             $nama_file_ijazah_sertifikat_s2 = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <a href='../ocrapi/upload/ijazah_sertifikat_s2/".$hasil_tampil['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>
+                    <a href='../ocrapi/upload/ijazah_s2_sertifikat/".$hasil_tampil['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>
                     <input type='hidden' name='file_ijazah_sertifikat_s2_hidden' value='".$hasil_tampil['file_ijazah_sertifikat_s2']."' />
                 </div>
             "; 
@@ -225,7 +227,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
                 $query_universitas_s2 = mysqli_query($connect, "select id, universitas from tbl_universitas order by universitas asc");
                 if(mysqli_num_rows($query_universitas_s2) > 0){
                     while($hasil_universitas = mysqli_fetch_array($query_universitas_s2)){
-                        $selected = $universitas == $hasil_universitas['id'] ? " selected='selected'" : "";
+                        $selected = $universitas_s2 == $hasil_universitas['id'] ? " selected='selected'" : "";
                         echo "<option value='".$hasil_universitas['id']."'".$selected.">".$hasil_universitas['universitas']."</option>";
                     }
                 }
@@ -246,7 +248,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
                 $query_jurusan_s2 = mysqli_query($connect, "select id, jurusan from tbl_jurusan order by jurusan asc");
                 if(mysqli_num_rows($query_jurusan_s2) > 0){
                     while($hasil_jurusan = mysqli_fetch_array($query_jurusan_s2)){
-                        $selected = $jurusan == $hasil_jurusan['id'] ? " selected='selected'" : "";
+                        $selected = $jurusan_s2 == $hasil_jurusan['id'] ? " selected='selected'" : "";
                         echo "<option value='".$hasil_jurusan['id']."'".$selected.">".$hasil_jurusan['jurusan']."</option>";
                     }
                 }

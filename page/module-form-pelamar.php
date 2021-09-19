@@ -44,25 +44,33 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
 <table class="table table-bordered" id="table_pelamar" style="margin-bottom: 0px;">
     <thead>                  
         <tr>
-            <th style="width: 10px; vertical-align: middle;">No</th>
-            <th style="text-align: center; vertical-align: middle;">Action</th>
-            <th style="text-align: center; vertical-align: middle;">Open Position</th>
-            <th style="text-align: center; vertical-align: middle;">Sertifikasi Lainnya</th>
-            <th style="text-align: center; vertical-align: middle;">Ketrampilan Bahasa</th>
-            <th style="text-align: center; vertical-align: middle;">Ketrampilan Lainnya</th>
-            <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
-            <th style="text-align: center; vertical-align: middle;">Nama Pelamar</th>
-            <th style="text-align: center; vertical-align: middle;">NIK</th>
-            <th style="text-align: center; vertical-align: middle;">Umur</th>
-            <th style="text-align: center; vertical-align: middle;">Tempat Lahir</th>
-            <th style="text-align: center; vertical-align: middle;">Tanggal Lahir</th>
-            <th style="text-align: center; vertical-align: middle;">Universitas</th>
-            <th style="text-align: center; vertical-align: middle;">Jurusan</th>
-            <th style="text-align: center; vertical-align: middle;">IPK</th>
-            <th style="text-align: center; vertical-align: middle;">File KTP</th>
-            <th style="text-align: center; vertical-align: middle;">File Transkrip</th>
-            <th style="text-align: center; vertical-align: middle;">File Ijazah</th>
-            <th style="text-align: center; vertical-align: middle;">File Transkrip Image</th>
+            <th style="width: 10px; vertical-align: middle; white-space: nowrap;">No</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Action</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Open Position</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Sertifikasi Lainnya</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Ketrampilan Bahasa</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Ketrampilan Lainnya</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Jenis Kelamin</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Nama Pelamar</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">NIK</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Umur</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Tempat Lahir</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Tanggal Lahir</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Universitas S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Jurusan S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">IPK S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Universitas S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Jurusan S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">IPK S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File KTP</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Transkrip S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Ijazah S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Transkrip Image S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Ijazah Image S1</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Transkrip S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Ijazah S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Transkrip Image S2</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">File Ijazah Image S2</th>
         </tr>
     </thead>
     <tbody>
@@ -75,15 +83,20 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 id,
                 universitas,
                 jurusan,
+                universitas_s2,
+                jurusan_s2,
                 nama_pelamar,
                 nik,
                 umur,
                 tempat_lahir,
                 tanggal_lahir, 
                 ipk,
+                ipk_s2,
                 file_ktp,
                 file_ijazah,
                 file_ijazah_sertifikat,
+                file_ijazah_s2,
+                file_ijazah_sertifikat_s2,
                 jenis_kelamin
             from tbl_pelamar_master
         ) a" . $search);
@@ -116,48 +129,72 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     id,
                     universitas,
                     jurusan,
+                    universitas_s2,
+                    jurusan_s2,
                     nama_pelamar,
                     nik,
                     umur,
                     tempat_lahir,
                     tanggal_lahir, 
                     ipk,
+                    ipk_s2,
                     file_ktp,
                     file_ijazah,
                     file_ijazah_sertifikat,
+                    file_ijazah_s2,
+                    file_ijazah_sertifikat_s2,
                     jenis_kelamin
                 from tbl_pelamar_master
             ) a " . $search . " order by nama_pelamar asc limit $start, $batas_data");
         if(mysqli_num_rows($query_pelamar) > 0){
             $no = $start + 1;
             while($hasil_pelamar = mysqli_fetch_array($query_pelamar)){
-                
+                $folder = "accessfile";
                 $query_universitas = mysqli_query($connect, "select universitas from tbl_universitas where id = '".$hasil_pelamar['universitas']."'");
                 $hasil_universitas = mysqli_num_rows($query_universitas) > 0 ? mysqli_fetch_array($query_universitas) : array('universitas' => '<font style="font-family: consolas, monospace;">Undefined</font>');
                 
                 $query_jurusan = mysqli_query($connect, "select jurusan from tbl_jurusan where id = '".$hasil_pelamar['jurusan']."'");
                 $hasil_jurusan = mysqli_num_rows($query_jurusan) > 0 ? mysqli_fetch_array($query_jurusan) : array('jurusan' => '<font style="font-family: consolas, monospace;">Undefined</font>');
                 
+                $query_universitas_s2 = mysqli_query($connect, "select universitas from tbl_universitas where id = '".$hasil_pelamar['universitas_s2']."'");
+                $hasil_universitas_s2 = mysqli_num_rows($query_universitas_s2) > 0 ? mysqli_fetch_array($query_universitas_s2) : array('universitas' => '<font style="font-family: consolas, monospace;">Undefined</font>');
+                
+                $query_jurusan_s2 = mysqli_query($connect, "select jurusan from tbl_jurusan where id = '".$hasil_pelamar['jurusan_s2']."'");
+                $hasil_jurusan_s2 = mysqli_num_rows($query_jurusan_s2) > 0 ? mysqli_fetch_array($query_jurusan_s2) : array('jurusan' => '<font style="font-family: consolas, monospace;">Undefined</font>');
+                
                 $file_ktp = "";
                 if($hasil_pelamar['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_pelamar['file_ktp'])){
-                    // $file_ktp = "<img src='../ocrapi/upload/ktp/".$hasil_pelamar['file_ktp']."' style='width: 200px;' />"; 
-                    $file_ktp = "File Forbidden."; 
+                    $file_ktp = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ktp--" . $hasil_pelamar['file_ktp']."' target='_blank'>Download</a>";
                 } else {
                     $file_ktp = "File KTP not found.";
                 }
                 
                 $file_ijazah = "";
                 if($hasil_pelamar['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_pelamar['file_ijazah'])){
-                    $file_ijazah = "<a href='../ocrapi/upload/ijazah/".$hasil_pelamar['file_ijazah']."' target='_blank'>Download</a>"; 
+                    $file_ijazah = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah--" . $hasil_pelamar['file_ijazah']."' target='_blank'>Download</a>"; 
                 } else {
-                    $file_ijazah = "File Transkrip not found.";
+                    $file_ijazah = "File Ijazah S1 not found.";
                 }
                 
                 $file_ijazah_sertifikat = "";
                 if($hasil_pelamar['file_ijazah_sertifikat'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $hasil_pelamar['file_ijazah_sertifikat'])){
-                    $file_ijazah_sertifikat = "<a href='../ocrapi/upload/ijazah_sertifikat/".$hasil_pelamar['file_ijazah_sertifikat']."' target='_blank'>Download</a>"; 
+                    $file_ijazah_sertifikat = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat']."' target='_blank'>Download</a>"; 
                 } else {
-                    $file_ijazah_sertifikat = "File Ijazah not found.";
+                    $file_ijazah_sertifikat = "File Ijazah Sertifikat S1 not found.";
+                }
+                
+                $file_ijazah_s2 = "";
+                if($hasil_pelamar['file_ijazah_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2/" . $hasil_pelamar['file_ijazah_s2'])){
+                    $file_ijazah_s2 = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2--" . $hasil_pelamar['file_ijazah_s2']."' target='_blank'>Download</a>"; 
+                } else {
+                    $file_ijazah_s2 = "File Ijazah S2 not found.";
+                }
+                
+                $file_ijazah_sertifikat_s2 = "";
+                if($hasil_pelamar['file_ijazah_sertifikat_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $hasil_pelamar['file_ijazah_sertifikat_s2'])){
+                    $file_ijazah_sertifikat_s2 = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>"; 
+                } else {
+                    $file_ijazah_sertifikat_s2 = "File Ijazah Sertifikat S2 not found.";
                 }
                 
                 ?>
@@ -179,20 +216,34 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td style="white-space: nowrap;">
                         <a href="index.php?page=form-pelamar-skill-perperson&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
                     </td>
-                    <td><?php echo $hasil_pelamar['jenis_kelamin']; ?></td>
-                    <td><?php echo $hasil_pelamar['nama_pelamar']; ?></td>
-                    <td><?php echo $hasil_pelamar['nik']; ?></td>
-                    <td><?php echo $hasil_pelamar['umur']; ?></td>
-                    <td><?php echo $hasil_pelamar['tempat_lahir']; ?></td>
-                    <td><?php echo $hasil_pelamar['tanggal_lahir']; ?></td>
-                    <td><?php echo $hasil_universitas['universitas']; ?></td>
-                    <td><?php echo $hasil_jurusan['jurusan']; ?></td>
-                    <td><?php echo $hasil_pelamar['ipk']; ?></td>
-                    <td><?php echo $file_ktp; ?></td>
-                    <td><?php echo $file_ijazah; ?></td>
-                    <td><?php echo $file_ijazah_sertifikat; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['jenis_kelamin']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['nama_pelamar']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['nik']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['umur']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['tempat_lahir']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['tanggal_lahir']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_universitas['universitas']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_jurusan['jurusan']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $hasil_pelamar['ipk']; ?></td>
+                    <td style=" white-space: nowrap;"><?php echo $hasil_universitas_s2['universitas']; ?></td>
+                    <td style=" white-space: nowrap;"><?php echo $hasil_jurusan_s2['jurusan']; ?></td>
+                    <td style=" white-space: nowrap;"><?php echo $hasil_pelamar['ipk_s2']; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $file_ktp; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $file_ijazah; ?></td>
+                    <td style="white-space: nowrap;"><?php echo $file_ijazah_sertifikat; ?></td>
                     <td style="white-space: nowrap;">
                         <a href="index.php?page=form-pelamar-show-transkrip-image&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-show-ijazah-image&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style=" white-space: nowrap;"><?php echo $file_ijazah_s2; ?></td>
+                    <td style=" white-space: nowrap;"><?php echo $file_ijazah_sertifikat_s2; ?></td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-show-transkrip-s2-image&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a href="index.php?page=form-pelamar-show-ijazah-s2-image&id=<?php echo $hasil_pelamar['id']; ?>" style="text-decoration: none;">Detail</a>
                     </td>
                 </tr>
                 <?php

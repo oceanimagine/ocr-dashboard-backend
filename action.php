@@ -3,6 +3,7 @@
 /* Perusahaan */
 // add 
 
+$GLOBALS['token'] = "33539c6c0927fef9634ea705ca9526c8eb96e982d77672ab97920210506090431";
 if(isset($_POST['daftar_perusahaan']) && $_POST['daftar_perusahaan'] == "Input"){
     $perusahaan = mysqli_real_escape_string($connect, $_POST['nama_perusahaan']);
     
@@ -339,7 +340,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
     
     $nama_file_ijazah_s2 = "";
     $nama_file_ijazah_s2_temp = mysqli_real_escape_string($connect, $_POST['file_ijazah_s2_hidden']);
-    if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2'])){
+    if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2']) && (isset($_FILES['file_ijazah_s2']['name']) && $_FILES['file_ijazah_s2']['name'] != "")){
         $file_ijazah_s2 = $_FILES['file_ijazah_s2'];
         $temp = $file_ijazah_s2['tmp_name'];
         $name = $file_ijazah_s2['name'];
@@ -352,11 +353,13 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             }
             shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_s2 . " ijazah_s2 > /dev/null 2>/dev/null &");
         }
+    } else {
+        $nama_file_ijazah_s2 = $nama_file_ijazah_s2_temp;
     }
 
     $nama_file_ijazah_sertifikat_s2 = "";
     $nama_file_ijazah_sertifikat_s2_temp = mysqli_real_escape_string($connect, $_POST['file_ijazah_sertifikat_s2_hidden']);
-    if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2'])){
+    if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2']) && (isset($_FILES['file_ijazah_sertifikat_s2']['name']) && $_FILES['file_ijazah_sertifikat_s2']['name'] != "")){
         $file_ijazah_sertifikat_s2 = $_FILES['file_ijazah_sertifikat_s2'];
         $temp = $file_ijazah_sertifikat_s2['tmp_name'];
         $name = $file_ijazah_sertifikat_s2['name'];
@@ -369,8 +372,9 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
             }
             shell_exec("php /var/www/html/ocrapi/SERVICECONVERTPERFILENEW.php " . $nama_file_ijazah_sertifikat_s2 . " ijazah_s2_sertifikat > /dev/null 2>/dev/null &");
         }
+    } else {
+        $nama_file_ijazah_sertifikat_s2 = $nama_file_ijazah_sertifikat_s2_temp;
     }
-    
     mysqli_query($connect, "
         update tbl_pelamar_master set
             nama_pelamar = '".$nama_pelamar."',
@@ -425,32 +429,80 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
                 insert into tbl_pelamar set
                     id_position = '".$id_position."',
                     nama_pelamar = '".$hasil_all['nama_pelamar']."',
+                    
+                    -- KTP
+                    file_ktp = '".$hasil_all['file_ktp']."',
                     nik = '".$hasil_all['nik']."',
                     umur = '".$hasil_all['umur']."',
                     tempat_lahir = '".$hasil_all['tempat_lahir']."',
                     tanggal_lahir = '".$hasil_all['tanggal_lahir']."',
-                    universitas = '".$hasil_all['universitas']."',
-                    jurusan = '".$hasil_all['jurusan']."',
-                    ipk = '".$hasil_all['ipk']."',
-                    file_ktp = '".$hasil_all['file_ktp']."',
-                    file_ijazah = '".$hasil_all['file_ijazah']."',
                     jenis_kelamin = '".$hasil_all['jenis_kelamin']."',
+                    
                     ktp_confidence_nik = '0',
                     ktp_confidence_nama = '0',
                     ktp_confidence_tanggal_lahir = '0',
                     ktp_confidence_tempat_lahir = '0',
+                    ktp_confidence_jenis_kelamin = '0',
+                    
                     ktp_result_nik = '',
                     ktp_result_nama = '',
                     ktp_result_tanggal_lahir = '',
                     ktp_result_tempat_lahir = '',
+                    ktp_result_jenis_kelamin = '',
+                    
+                    -- IJAZAH DAN TRANSKRIP S1
+                    file_ijazah = '".$hasil_all['file_ijazah']."',
+                    file_ijazah_sertifikat = '".$hasil_all['file_ijazah_sertifikat']."',
+                    universitas = '".$hasil_all['universitas']."',
+                    jurusan = '".$hasil_all['jurusan']."',
+                    ipk = '".$hasil_all['ipk']."',
+                    
+                    -- TRANSKRIP S1 OCR
                     ijazah_confidence_nama = '0',
                     ijazah_confidence_universitas = '0',
                     ijazah_confidence_jurusan = '0',
                     ijazah_confidence_ipk = '0',
-                    ijazah_result_nama = '0',
+                    
+                    ijazah_result_nama = '',
                     ijazah_result_universitas = '',
                     ijazah_result_jurusan = '',
-                    ijazah_result_ipk = ''
+                    ijazah_result_ipk = '',
+                    
+                    -- IJAZAH S1 OCR
+                    ijazah_sertifikat_confidence_nama = '0',
+                    ijazah_sertifikat_confidence_universitas = '0',
+                    ijazah_sertifikat_confidence_jurusan = '0',
+                    
+                    ijazah_sertifikat_result_nama = '',
+                    ijazah_sertifikat_result_universitas = '',
+                    ijazah_sertifikat_result_jurusan = '',
+                    
+                    -- IJAZAH DAN TRANSKRIP S2
+                    file_ijazah_s2 = '".$hasil_all['file_ijazah_s2']."',
+                    file_ijazah_sertifikat_s2 = '".$hasil_all['file_ijazah_sertifikat_s2']."',
+                    universitas_s2 = '".$hasil_all['universitas_s2']."',
+                    jurusan_s2 = '".$hasil_all['jurusan_s2']."',
+                    ipk_s2 = '".$hasil_all['ipk_s2']."',
+                    
+                    -- TRANSKRIP S2 OCR
+                    ijazah_s2_confidence_nama = '0',
+                    ijazah_s2_confidence_universitas = '0',
+                    ijazah_s2_confidence_jurusan = '0',
+                    ijazah_s2_confidence_ipk = '0',
+                    
+                    ijazah_s2_result_nama = '',
+                    ijazah_s2_result_universitas = '',
+                    ijazah_s2_result_jurusan = '',
+                    ijazah_s2_result_ipk = '',
+                    
+                    -- IJAZAH S2 OCR
+                    ijazah_s2_sertifikat_confidence_nama = '0',
+                    ijazah_s2_sertifikat_confidence_universitas = '0',
+                    ijazah_s2_sertifikat_confidence_jurusan = '0',
+                    
+                    ijazah_s2_sertifikat_result_nama = '',
+                    ijazah_s2_sertifikat_result_universitas = '',
+                    ijazah_s2_sertifikat_result_jurusan = ''
                     
             ");
             if(mysqli_affected_rows($connect) > 0){
