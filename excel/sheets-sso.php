@@ -236,7 +236,7 @@ require_once __DIR__.'/XLSX.php';
 if(isset($argv) && is_array($argv) && isset($argv[1])){
     $file_name_excel = $argv[1];
 } else {
-    $file_name_excel = "FORMAT-NEW.xlsx";
+    $file_name_excel = "NEW FORMAT SSO.xlsx";
 }
 echo $file_name_excel . "<br />\n";
 $query_check_file = mysqli_query($connect, "
@@ -308,6 +308,14 @@ if ($xlsx) {
         $count_insert_lamaran_bidang_baru = 0;
         foreach($xlsx->rows($i) as $r) {
             if($k > 0){ 
+                $keys_ = array_keys($r);
+                for($i = 0; sizeof($keys_); $i++){
+                    if(isset($keys_[$i]) && isset($r[$keys_[$i]])){
+                        $r[$keys_[$i]] = mysqli_real_escape_string($connect, $r[$keys_[$i]]);
+                    } else {
+                        break;
+                    }
+                }
                 $tanggal_apply = $r[$array_huruf['D']];
                 $explode_space = explode(" ", $tanggal_apply);
                 $tanggal_maks = $explode_space[0];
@@ -362,6 +370,21 @@ if ($xlsx) {
                     $last_id_universitas = $hasil_cek_universitas['id'];
                 }
                 
+                $query_cek_jurusan = mysqli_query($connect, "
+                    select id from tbl_jurusan where
+                    jurusan = '".$r[$array_huruf['L']]."'
+                ");
+                if(mysqli_num_rows($query_cek_jurusan) == 0){
+                    mysqli_query($connect, "
+                        insert into tbl_jurusan set
+                        jurusan = '".$r[$array_huruf['L']]."'
+                    ");
+                    $last_id_jurusan = mysqli_insert_id($connect);
+                } else {
+                    $hasil_cek_jurusan = mysqli_fetch_array($query_cek_jurusan);
+                    $last_id_jurusan = $hasil_cek_jurusan['id'];
+                }
+                
                 $kualifikasi_aktif = $r[$array_huruf['J']];
                 if($kualifikasi_aktif == "D4"){
                     $kualifikasi_aktif = "S1";
@@ -375,11 +398,13 @@ if ($xlsx) {
                     $last_id_kualifikasi_tingkat = $hasil_id_kualifikasi_tingkat['id'];
                 }
                 
-                $file_ktp = $r[$array_huruf['O']];
-                $file_ijazah = $r[$array_huruf['P']];
-                $file_ijazah_s2 = $r[$array_huruf['S']];
-                $file_ijazah_sertifikat = $r[$array_huruf['Q']];
-                $file_ijazah_sertifikat_s2 = $r[$array_huruf['T']];
+                $r[$array_huruf['E']] = str_replace("'", "", $r[$array_huruf['E']]);
+                
+                $file_ktp = $r[$array_huruf['P']];
+                $file_ijazah = $r[$array_huruf['Q']];
+                $file_ijazah_s2 = $r[$array_huruf['T']];
+                $file_ijazah_sertifikat = $r[$array_huruf['R']];
+                $file_ijazah_sertifikat_s2 = $r[$array_huruf['U']];
                 
                 $nama_file_ktp = "";
                 $nama_file_ijazah = "";
@@ -483,6 +508,16 @@ if ($xlsx) {
                     from 
                         tbl_pelamar_master where nik = '".$r[$array_huruf['E']]."'
                 ");
+                if($file_ijazah != ""){
+                    $kolom_universitas = "universitas";
+                    $kolom_jurusan = "jurusan";
+                    $kolom_ipk = "ipk";
+                }
+                else if($file_ijazah_s2 != ""){
+                    $kolom_universitas = "universitas_s2";
+                    $kolom_jurusan = "jurusan_s2";
+                    $kolom_ipk = "ipk_s2";
+                }
                 if(mysqli_num_rows($query_cek_pelamar_master) == 0){
                     
                     $explode_tanggal_lahir = explode(" ", $r[$array_huruf['F']]);
@@ -494,19 +529,21 @@ if ($xlsx) {
                         active_status = 'NOACTIVE',
                         jenis_kelamin = '".strtolower($r[$array_huruf['H']])."',
                         nama_pelamar = '".$r[$array_huruf['B']]."',
-                        alamat_sesuai_ktp = '".$r[$array_huruf['M']]."',
+                        alamat_sesuai_ktp = '".$r[$array_huruf['N']]."',
                         nik = '".$r[$array_huruf['E']]."',
                         tanggal_lahir = '".$tanggal_lahir_active."',
                         tempat_lahir = '".$r[$array_huruf['G']]."',
-                        universitas = '".$last_id_universitas."',
+                        ".$kolom_universitas." = '".$last_id_universitas."',
+                        ".$kolom_jurusan." = '".$last_id_jurusan."',
+                        ".$kolom_ipk." = '".$r[$array_huruf['S']]."',
                         bulan_lulus = '',
                         file_ktp = '".$nama_file_ktp."',
                         file_ijazah = '".$nama_file_ijazah."',
                         file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
                         file_ijazah_s2 = '".$nama_file_ijazah_s2."',
                         file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."',
-                        kualifikasi_tingkat = '".$last_id_kualifikasi_tingkat."',
-                        ipk = '".$r[$array_huruf['R']]."'
+                        kualifikasi_tingkat = '".$last_id_kualifikasi_tingkat."'
+                        
                     ");
                     if(mysqli_affected_rows($connect) > 0){
                         $count_insert = $count_insert + 1;
@@ -552,19 +589,20 @@ if ($xlsx) {
                         active_status = 'NOACTIVE',
                         jenis_kelamin = '".strtolower($r[$array_huruf['H']])."',
                         nama_pelamar = '".$r[$array_huruf['B']]."',
-                        alamat_sesuai_ktp = '".$r[$array_huruf['M']]."',
+                        alamat_sesuai_ktp = '".$r[$array_huruf['N']]."',
                         nik = '".$r[$array_huruf['E']]."',
                         tanggal_lahir = '".$tanggal_lahir_active."',
                         tempat_lahir = '".$r[$array_huruf['G']]."',
-                        universitas = '".$last_id_universitas."',
+                        ".$kolom_universitas." = '".$last_id_universitas."',
+                        ".$kolom_jurusan." = '".$last_id_jurusan."',
+                        ".$kolom_ipk." = '".$r[$array_huruf['S']]."',
                         bulan_lulus = '',
                         file_ktp = '".$nama_file_ktp."',
                         file_ijazah = '".$nama_file_ijazah."',
                         file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
                         file_ijazah_s2 = '".$nama_file_ijazah_s2."',
                         file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."',
-                        kualifikasi_tingkat = '".$last_id_kualifikasi_tingkat."',
-                        ipk = '".$r[$array_huruf['R']]."'
+                        kualifikasi_tingkat = '".$last_id_kualifikasi_tingkat."'
                         where nik = '".$r[$array_huruf['E']]."'
                     ");
                     if(mysqli_affected_rows($connect) > 0){
@@ -596,14 +634,15 @@ if ($xlsx) {
                             umur = '". get_age($tanggal_lahir_active)."',
                             tempat_lahir = '".$r[$array_huruf['G']]."',
                             tanggal_lahir = '".$tanggal_lahir_active."',
-                            bidang_pekerjaan = '".$r[$array_huruf['L']]."',
-                            universitas = '".$last_id_universitas."',
+                            bidang_pekerjaan = '".$r[$array_huruf['M']]."',
+                            ".$kolom_universitas." = '".$last_id_universitas."',
+                            ".$kolom_jurusan." = '".$last_id_jurusan."',
+                            ".$kolom_ipk." = '".$r[$array_huruf['S']]."',
                             file_ktp = '".$nama_file_ktp."',
                             file_ijazah = '".$nama_file_ijazah."',
                             file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
                             file_ijazah_s2 = '".$nama_file_ijazah_s2."',
-                            file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."',
-                            ipk = '".$r[$array_huruf['R']]."'
+                            file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."'
                         ");
                         if(mysqli_affected_rows($connect) > 0){
                             $count_insert_lamaran = $count_insert_lamaran + 1;
@@ -617,7 +656,7 @@ if ($xlsx) {
                         $query_cek_pelamar_bidang_pekerjaan = mysqli_query($connect, "
                             select id from tbl_pelamar where 
                             nik = '".$r[$array_huruf['E']]."' and
-                            bidang_pekerjaan = '".$r[$array_huruf['L']]."'
+                            bidang_pekerjaan = '".$r[$array_huruf['M']]."'
                         ");
                         if(mysqli_num_rows($query_cek_pelamar_bidang_pekerjaan) == 0){
                             $explode_tanggal_lahir = explode(" ", $r[$array_huruf['F']]);
@@ -631,14 +670,15 @@ if ($xlsx) {
                                 umur = '". get_age($tanggal_lahir_active)."',
                                 tempat_lahir = '".$r[$array_huruf['G']]."',
                                 tanggal_lahir = '".$tanggal_lahir_active."',
-                                bidang_pekerjaan = '".$r[$array_huruf['L']]."',
-                                universitas = '".$last_id_universitas."',
+                                bidang_pekerjaan = '".$r[$array_huruf['M']]."',
+                                ".$kolom_universitas." = '".$last_id_universitas."',
+                                ".$kolom_jurusan." = '".$last_id_jurusan."',
+                                ".$kolom_ipk." = '".$r[$array_huruf['S']]."',
                                 file_ktp = '".$nama_file_ktp."',
                                 file_ijazah = '".$nama_file_ijazah."',
                                 file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
                                 file_ijazah_s2 = '".$nama_file_ijazah_s2."',
-                                file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."',
-                                ipk = '".$r[$array_huruf['R']]."'
+                                file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."'
                             ");
                             if(mysqli_affected_rows($connect) > 0){
                                 $count_insert_lamaran_bidang_baru = $count_insert_lamaran_bidang_baru + 1;
@@ -660,14 +700,15 @@ if ($xlsx) {
                                 umur = '". get_age($tanggal_lahir_active)."',
                                 tempat_lahir = '".$r[$array_huruf['G']]."',
                                 tanggal_lahir = '".$tanggal_lahir_active."',
-                                bidang_pekerjaan = '".$r[$array_huruf['L']]."',
-                                universitas = '".$last_id_universitas."',
+                                bidang_pekerjaan = '".$r[$array_huruf['M']]."',
+                                ".$kolom_universitas." = '".$last_id_universitas."',
+                                ".$kolom_jurusan." = '".$last_id_jurusan."',
+                                ".$kolom_ipk." = '".$r[$array_huruf['S']]."',
                                 file_ktp = '".$nama_file_ktp."',
                                 file_ijazah = '".$nama_file_ijazah."',
                                 file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
                                 file_ijazah_s2 = '".$nama_file_ijazah_s2."',
-                                file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."',
-                                ipk = '".$r[$array_huruf['R']]."'
+                                file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."'
                                 where nik = '".$r[$array_huruf['E']]."'
                             ");
                             if(mysqli_affected_rows($connect) > 0){
