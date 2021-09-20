@@ -18,7 +18,8 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
             <th>Done Amount</th>
             <th>Applicant Amount</th>
             <th>Reset</th>
-            <th>Action</th>
+            <?php /*
+            <th>Action</th> */?>
             <th>Logs</th>
         </tr>
     </thead>
@@ -70,7 +71,8 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
                     <?php /* 
                     <td><a href="https://ocr-solution.id:7000/ocrapi/callback-tambahan.php?id_op=<?php echo $hasil_openposition['id']; ?>" target="_blank">Hit Callback</a></td> */ ?>
                     <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
-                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td>
+                    <?php /*
+                    <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td> */ ?>
                     <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
                 </tr>
                 <?php
