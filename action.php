@@ -802,7 +802,7 @@ if(isset($_POST['upload_excel']) && $_POST['upload_excel'] == "Upload Excel"){
                 $_SESSION['keterangan'] = "File Excel berhasil diupload.";
                 mysqli_query($connect, "
                     insert into tbl_proses_excel_log 
-                    set nama_file = '".$name."'
+                    set nama_file = '".$namefile."'
                 ");
                 shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $namefile . " > /dev/null 2>/dev/null &");
                 header("location: index.php?page=upload-sso-view");
