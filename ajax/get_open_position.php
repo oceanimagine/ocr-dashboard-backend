@@ -16,6 +16,7 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
             <th>Open Position</th>
             <th>Sent Amount</th>
             <th>Done Amount</th>
+            <th style="text-align: center;">Normal Amount</th>
             <th>Applicant Amount</th>
             <th>Reset</th>
             <?php /*
@@ -59,6 +60,8 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
                 $jumlah_done = mysqli_num_rows($query_done_);
                 $query_sent_ = mysqli_query($connect, "select id_position from tbl_document_track where id_position = '".$hasil_openposition['id']."'");
                 $jumlah_sent = mysqli_num_rows($query_sent_);
+                $query_normal_ = mysqli_query($connect, "select id_position from tbl_document_track where id_position = '".$hasil_openposition['id']."' and status_ocr = 'Done' and document_flagging = 'normal'");
+                $jumlah_normal = mysqli_num_rows($query_normal_);
                 $query_applicant_ = mysqli_query($connect, "select count(id_position) jumlah_pelamar from tbl_pelamar where id_position = '".$hasil_openposition['id']."'");
                 $jumlah_applicant = mysqli_fetch_array($query_applicant_);
                 ?>
@@ -67,6 +70,7 @@ $halaman_before = isset($_GET['halaman']) && $_GET['halaman'] != "" && is_numeri
                     <td><?php echo $hasil_openposition['open_position']; ?></td>
                     <td class="row_sent" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_sent; ?></td>
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
+                    <td class="row_normal" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_normal; ?></td>
                     <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
                     <?php /* 
                     <td><a href="https://ocr-solution.id:7000/ocrapi/callback-tambahan.php?id_op=<?php echo $hasil_openposition['id']; ?>" target="_blank">Hit Callback</a></td> */ ?>
