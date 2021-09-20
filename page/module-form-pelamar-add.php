@@ -137,7 +137,12 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
             <label for="nik" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">NIK</label>
         </div>
         <div class="col-lg-10">
-            <input placeholder="NIK" type="text" name="nik" id="nik" class="form-control" value="<?php echo $nik; ?>" />
+            <?php if($nik != ""){ ?>
+            <input type="hidden" name="nik" value="<?php echo $nik; ?>" />
+            <input placeholder="NIK" type="text" name="nik_readonly" disabled="disabled" id="nik" class="form-control" value="<?php echo $nik; ?>" />
+            <?php } else { ?>
+            <input placeholder="NIK" type="text" name="nik" id="nik" class="form-control" />
+            <?php } ?>
         </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">

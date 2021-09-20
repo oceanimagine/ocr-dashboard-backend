@@ -399,6 +399,28 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Update Pelama
         where id = '".$_GET['id']."'
     ");
     if(mysqli_affected_rows($connect) > 0){
+        // Update Info Lamaran
+        mysqli_query($connect, "
+            update tbl_pelamar set
+                nama_pelamar = '".$nama_pelamar."',
+                nik = '".$nik."',
+                umur = '".$umur."',
+                tempat_lahir = '".$tempat_lahir."',
+                tanggal_lahir = '".$tanggal_lahir."',
+                jenis_kelamin = '".$jenis_kelamin."',
+                file_ktp = '".$nama_file_ktp."',
+                universitas = '".$universitas."',
+                jurusan = '".$jurusan."',
+                ipk = '".$ipk."',
+                file_ijazah = '".$nama_file_ijazah."',
+                file_ijazah_sertifikat = '".$nama_file_ijazah_sertifikat."',
+                universitas_s2 = '".$universitas_s2."',
+                jurusan_s2 = '".$jurusan_s2."',
+                ipk_s2 = '".$ipk_s2."',
+                file_ijazah_s2 = '".$nama_file_ijazah_s2."',
+                file_ijazah_sertifikat_s2 = '".$nama_file_ijazah_sertifikat_s2."'
+            where nik = '".$nik."'
+        ");
         $_SESSION['count'] = 1;
         $_SESSION['keterangan'] = "Berhasil Update Data Pelamar.";
         header("location: index.php?page=form-pelamar-add&id=" . $_GET['id']);

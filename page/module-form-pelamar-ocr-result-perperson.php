@@ -235,7 +235,7 @@ if(mysqli_num_rows($query_jurusan_s2) > 0){
         </tr>
         <tr>
             <td style="text-align: center; white-space: nowrap;" colspan="4">
-                <?php if($hasil_ocr_db['file_ijazah'] != "" && file_exists("../ocrapi/upload/izajah/" . $hasil_ocr_db['file_ijazah'])){ ?>
+                <?php if($hasil_ocr_db['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_ocr_db['file_ijazah'])){ ?>
                 <iframe src='../ocrapi/<?php echo $folder; ?>/TOKENACCESS--<?php echo $GLOBALS['token']; ?>--ijazah--<?php echo $hasil_ocr_db['file_ijazah']; ?>' style='width: 450px; height: 550px' frameborder="0" framespaceing="0"></iframe>
                 <?php } else { ?>
                 <iframe src='images/NOTFOUND.pdf' style='width: 450px; height: 245px' frameborder="0" framespaceing="0"></iframe>
