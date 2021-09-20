@@ -69,7 +69,7 @@ if(isset($_GET['id_ketrampilan']) && $_GET['id_ketrampilan'] != "" && is_numeric
     </div>
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-lg-2">
-            <label for="tingkat_ketrampilan" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Tingkat Lisan</label>
+            <label for="tingkat_ketrampilan" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Tingkat Ketrampilan</label>
         </div>
         <div class="col-lg-10">
             <select name="tingkat_ketrampilan" id="tingkat_ketrampilan" class="form-control">
