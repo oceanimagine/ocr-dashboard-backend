@@ -6,6 +6,8 @@ $user = "root";
 $pass = "";
 $db = "project_ocr_trial";
 
+$folder = "accessfile";
+
 $connect = mysqli_connect($host, $user, $pass, $db);
 
 if(isset($_POST['login']) && $_POST['login'] == "login"){

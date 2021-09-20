@@ -23,6 +23,7 @@ $id_position = "";
 $button_label = "Input Open Position";
 
 $nama_pelamar = "";
+$bidang_pekerjaan = "";
 $nik_pelamar = "";
 $query_nama_pelamar = mysqli_query($connect, "select nama_pelamar,nik from tbl_pelamar_master where id = '".$id_pelamar."'");
 if(mysqli_num_rows($query_nama_pelamar) > 0){
@@ -34,10 +35,11 @@ if(mysqli_num_rows($query_nama_pelamar) > 0){
 $id_active = "";
 if(isset($_GET['id_open_position']) && $_GET['id_open_position'] != "" && is_numeric($_GET['id_open_position'])){
     $button_label = "Update Open Position";
-    $query_active = mysqli_query($connect, "select id from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_open_position."'");
+    $query_active = mysqli_query($connect, "select id, bidang_pekerjaan from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_open_position."'");
     if(mysqli_num_rows($query_active) > 0){
         $hasil_active = mysqli_fetch_array($query_active);
         $id_active = $hasil_active['id'];
+        $bidang_pekerjaan = $hasil_active['bidang_pekerjaan'];
     }
 }
 
@@ -55,6 +57,14 @@ if(isset($_GET['id_open_position']) && $_GET['id_open_position'] != "" && is_num
         <div class="col-lg-10">
             <input type="hidden" name="id_hidden" value="<?php echo $id_active; ?>" />
             <input placeholder="Nama Pelamar" disabled="disabled" type="text" id="nama_pelamar" name="nama_pelamar" class="form-control" value="<?php echo $nama_pelamar; ?>" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-2">
+            <label for="bidang_pekerjaan" class="control-label" style="margin-bottom: 0px; margin-top: 6px;">Bidang Pekerjaan</label>
+        </div>
+        <div class="col-lg-10">
+            <input placeholder="Bidang Pekerjaan" type="text" id="bidang_pekerjaan" name="bidang_pekerjaan" class="form-control" value="<?php echo $bidang_pekerjaan; ?>" />
         </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">

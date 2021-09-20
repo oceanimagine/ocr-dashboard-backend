@@ -152,7 +152,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
     $query_hapus = mysqli_query($connect, "select nik from tbl_pelamar_master where nik = '".$nik."'");
     if(mysqli_num_rows($query_hapus) == 0){
         $nama_file_ktp = "";
-        if(isset($_FILES['file_ktp']) && is_array($_FILES['file_ktp'])){
+        if(isset($_FILES['file_ktp']) && is_array($_FILES['file_ktp']) && (isset($_FILES['file_ktp']['name']) && $_FILES['file_ktp']['name'] != "")){
             $file_ktp = $_FILES['file_ktp'];
             $temp = $file_ktp['tmp_name'];
             $name = $file_ktp['name'];
@@ -163,7 +163,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
         }
 
         $nama_file_ijazah = "";
-        if(isset($_FILES['file_ijazah']) && is_array($_FILES['file_ijazah'])){
+        if(isset($_FILES['file_ijazah']) && is_array($_FILES['file_ijazah']) && (isset($_FILES['file_ijazah']['name']) && $_FILES['file_ijazah']['name'] != "")){
             $file_ijazah = $_FILES['file_ijazah'];
             $temp = $file_ijazah['tmp_name'];
             $name = $file_ijazah['name'];
@@ -175,7 +175,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
         }
         
         $nama_file_ijazah_sertifikat = "";
-        if(isset($_FILES['file_ijazah_sertifikat']) && is_array($_FILES['file_ijazah_sertifikat'])){
+        if(isset($_FILES['file_ijazah_sertifikat']) && is_array($_FILES['file_ijazah_sertifikat']) && (isset($_FILES['file_ijazah_sertifikat']['name']) && $_FILES['file_ijazah_sertifikat']['name'] != "")){
             $file_ijazah_sertifikat = $_FILES['file_ijazah_sertifikat'];
             $temp = $file_ijazah_sertifikat['tmp_name'];
             $name = $file_ijazah_sertifikat['name'];
@@ -187,7 +187,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
         }
         
         $nama_file_ijazah_s2 = "";
-        if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2'])){
+        if(isset($_FILES['file_ijazah_s2']) && is_array($_FILES['file_ijazah_s2']) && (isset($_FILES['file_ijazah_s2']['name']) && $_FILES['file_ijazah_s2']['name'] != "")){
             $file_ijazah_s2 = $_FILES['file_ijazah_s2'];
             $temp = $file_ijazah_s2['tmp_name'];
             $name = $file_ijazah_s2['name'];
@@ -199,7 +199,7 @@ if(isset($_POST['daftar_pelamar']) && $_POST['daftar_pelamar'] == "Input Pelamar
         }
         
         $nama_file_ijazah_sertifikat_s2 = "";
-        if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2'])){
+        if(isset($_FILES['file_ijazah_sertifikat_s2']) && is_array($_FILES['file_ijazah_sertifikat_s2']) && (isset($_FILES['file_ijazah_sertifikat_s2']['name']) && $_FILES['file_ijazah_sertifikat_s2']['name'] != "")){
             $file_ijazah_sertifikat_s2 = $_FILES['file_ijazah_sertifikat_s2'];
             $temp = $file_ijazah_sertifikat_s2['tmp_name'];
             $name = $file_ijazah_sertifikat_s2['name'];
@@ -420,7 +420,14 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
         $nik_pelamar = $hasil_nama_pelamar['nik'];
     }
     $id_position = mysqli_real_escape_string($connect, $_POST['id_position']);
-    $query_check = mysqli_query($connect, "select id from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_position."'");
+    $bidang_pekerjaan = mysqli_real_escape_string($connect, $_POST['bidang_pekerjaan']);
+    if($bidang_pekerjaan == ""){
+        $_SESSION['count'] = 2;
+        $_SESSION['keterangan'] = "Bidang Pekerjaan Tidak Boleh Kosong.";
+        header("location: index.php?page=form-pelamar-open-position-perperson-add&id=" . $id_pelamar);
+        exit();
+    }
+    $query_check = mysqli_query($connect, "select id from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_position."' and bidang_pekerjaan = '".$bidang_pekerjaan."'");
     if(mysqli_num_rows($query_check) == 0){
         $query_all = mysqli_query($connect, "select * from tbl_pelamar_master where id = '".$id_pelamar."'");
         if(mysqli_num_rows($query_all) > 0){
@@ -429,6 +436,7 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
                 insert into tbl_pelamar set
                     id_position = '".$id_position."',
                     nama_pelamar = '".$hasil_all['nama_pelamar']."',
+                    bidang_pekerjaan = '".$bidang_pekerjaan."',
                     
                     -- KTP
                     file_ktp = '".$hasil_all['file_ktp']."',
@@ -535,28 +543,35 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
     }
     $id_open_position = isset($_GET['id_open_position']) && $_GET['id_open_position'] != "" && is_numeric($_GET['id_open_position']) ? mysqli_real_escape_string($connect, $_GET['id_open_position']) : "";
     $id_position = mysqli_real_escape_string($connect, $_POST['id_position']);
+    $bidang_pekerjaan = mysqli_real_escape_string($connect, $_POST['bidang_pekerjaan']);
+    if($bidang_pekerjaan == ""){
+        $_SESSION['count'] = 2;
+        $_SESSION['keterangan'] = "Bidang Pekerjaan Tidak Boleh Kosong.";
+        header("location: index.php?page=pelamar-open-position-perperson-add&id=" . $id_pelamar);
+        exit();
+    }
     if($nik_pelamar == ""){
         $_SESSION['count'] = 2;
         $_SESSION['keterangan'] = "NIK Kosong.";
         header("location: index.php?page=form-pelamar-open-position-perperson&id=" . $id_pelamar_master);
         exit();
     }
-    if($id_open_position != $id_position){
-        $query_check = mysqli_query($connect, "select id from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_position."'");
-    } else {
+    $query_check = mysqli_query($connect, "select id from tbl_pelamar where nik = '".$nik_pelamar."' and id_position = '".$id_position."' and bidang_pekerjaan = '".$bidang_pekerjaan."'");
+    if(mysqli_num_rows($query_check) > 0){
         $_SESSION['count'] = 2;
-        $_SESSION['keterangan'] = "Pilih Open Position yang Berbeda.";
+        $_SESSION['keterangan'] = "Pilih Open Position yang Berbeda atau Open Position yang sama dengan Bidang berbeda.";
         header("location: index.php?page=form-pelamar-open-position-perperson&id=" . $id_pelamar_master);
         exit();
     }
-    if(mysqli_num_rows($query_check) == 0){
+    else if(mysqli_num_rows($query_check) == 0){
         $query_all = mysqli_query($connect, "select * from tbl_pelamar where id = '".$id_pelamar."'");
         if(mysqli_num_rows($query_all) > 0){
             $hasil_all = mysqli_fetch_array($query_all);
             
             mysqli_query($connect, "
                 update tbl_pelamar set
-                    id_position = '".$id_position."'
+                    id_position = '".$id_position."',
+                    bidang_pekerjaan = '".$bidang_pekerjaan."'
                 where id = '".$id_pelamar."' and id_position = '".$id_open_position."'
             ");
             if(mysqli_affected_rows($connect) > 0){
@@ -573,6 +588,176 @@ if(isset($_POST['daftar_open_position_per_person']) && $_POST['daftar_open_posit
         $_SESSION['count'] = 1;
         $_SESSION['keterangan'] = "Open Position Sudah Dilamar.";
         header("location: index.php?page=form-pelamar-open-position-perperson&id=" . $id_pelamar_master);
+    }
+}
+
+// Upload Sertifikasi Lainnya
+if(isset($_POST['daftar_sertifikasi_lainnya']) && $_POST['daftar_sertifikasi_lainnya'] == "Input Sertifikasi Lainnya"){
+    $id_pelamar_hidden = mysqli_real_escape_string($connect, $_POST['id_pelamar_hidden']);
+    $judul_sertifikasi = mysqli_real_escape_string($connect, $_POST['judul_sertifikasi']);
+    $nama_file_sertifikasi = "";
+    if(isset($_FILES['file_sertifikasi']) && is_array($_FILES['file_sertifikasi']) && (isset($_FILES['file_sertifikasi']['name']) && $_FILES['file_sertifikasi']['name'] != "")){
+        $file_sertifikasi = $_FILES['file_sertifikasi'];
+        $temp = $file_sertifikasi['tmp_name'];
+        $name = $file_sertifikasi['name'];
+        $expl = explode(".", $name);
+        $type = $expl[sizeof($expl) - 1];
+        $nama_file_sertifikasi = "SERTIFIKASIPELAMAR" . date("Ymd") . date("His") . "." . $type;
+        move_uploaded_file($temp, "../ocrapi/upload/sertifikasi_lainnya/" . $nama_file_sertifikasi);
+    }
+    mysqli_query($connect, "
+        insert into tbl_serifikasi_tambahan set
+        id_pelamar = '".$id_pelamar_hidden."',
+        judul_sertifikasi = '".$judul_sertifikasi."',
+        file_sertifikasi = '".$nama_file_sertifikasi."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Insert Sertifikasi Lainnya.";
+        header("location: index.php?page=form-pelamar-other-cert&id=" . $id_pelamar_hidden);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Insert Sertifikasi Lainnya.";
+        header("location: index.php?page=form-pelamar-other-cert&id=" . $id_pelamar_hidden);
+    }
+    
+}
+
+if(isset($_POST['daftar_sertifikasi_lainnya']) && $_POST['daftar_sertifikasi_lainnya'] == "Update Sertifikasi Lainnya"){
+    $id_sertifikasi_tambahan = isset($_GET['id_sertifikasi_tambahan']) ? mysqli_real_escape_string($connect, $_GET['id_sertifikasi_tambahan']) : "";
+    $id_pelamar_hidden = mysqli_real_escape_string($connect, $_POST['id_pelamar_hidden']);
+    $judul_sertifikasi = mysqli_real_escape_string($connect, $_POST['judul_sertifikasi']);
+    $nama_file_sertifikasi = "";
+    $nama_file_sertifikasi_temp = mysqli_real_escape_string($connect, $_POST['file_sertifikasi_hidden']);
+    if(isset($_FILES['file_sertifikasi']) && is_array($_FILES['file_sertifikasi']) && (isset($_FILES['file_sertifikasi']['name']) && $_FILES['file_sertifikasi']['name'] != "")){
+        $file_sertifikasi = $_FILES['file_sertifikasi'];
+        $temp = $file_sertifikasi['tmp_name'];
+        $name = $file_sertifikasi['name'];
+        $expl = explode(".", $name);
+        $type = $expl[sizeof($expl) - 1];
+        $nama_file_sertifikasi = "SERTIFIKASIPELAMAR" . date("Ymd") . date("His") . "." . $type;
+        if(move_uploaded_file($temp, "../ocrapi/upload/sertifikasi_lainnya/" . $nama_file_sertifikasi)){
+            if($nama_file_sertifikasi_temp != "" && file_exists("../ocrapi/upload/sertifikasi_lainnya/" . $nama_file_sertifikasi_temp)){
+                unlink("../ocrapi/upload/sertifikasi_lainnya/" . $nama_file_sertifikasi_temp);
+            }
+        }
+    } else {
+        $nama_file_sertifikasi = $nama_file_sertifikasi_temp;
+    }
+    mysqli_query($connect, "
+        update tbl_serifikasi_tambahan set
+        id_pelamar = '".$id_pelamar_hidden."',
+        judul_sertifikasi = '".$judul_sertifikasi."',
+        file_sertifikasi = '".$nama_file_sertifikasi."'
+        where id = '".$id_sertifikasi_tambahan."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Update Sertifikasi Lainnya.";
+        header("location: index.php?page=form-pelamar-other-cert&id=" . $id_pelamar_hidden);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Update Sertifikasi Lainnya.";
+        header("location: index.php?page=form-pelamar-other-cert&id=" . $id_pelamar_hidden);
+    }
+    
+}
+
+// Add Bahasa
+if(isset($_POST['daftar_ketrampilan_bahasa']) && $_POST['daftar_ketrampilan_bahasa'] == "Input Ketrampilan Bahasa"){
+    $id_pelamar_master = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : "";
+    $nama_bahasa = mysqli_real_escape_string($connect, $_POST['nama_bahasa']);
+    $tingkat_lisan = mysqli_real_escape_string($connect, $_POST['tingkat_lisan']);
+    $tingkat_tulisan = mysqli_real_escape_string($connect, $_POST['tingkat_tulisan']);
+    $urutan_bahasa = mysqli_real_escape_string($connect, $_POST['urutan_bahasa']);
+    mysqli_query($connect, "
+        insert into tbl_ketrampilan_bahasa set
+        nama_bahasa = '".$nama_bahasa."',
+        tingkat_lisan = '".$tingkat_lisan."',
+        tingkat_tulisan = '".$tingkat_tulisan."',
+        urutan_bahasa = '".$urutan_bahasa."',
+        id_pelamar = '".$id_pelamar_master."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Insert Ketrampilan Bahasa.";
+        header("location: index.php?page=form-pelamar-languague-perperson&id=" . $id_pelamar_master);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Insert Ketrampilan Bahasa.";
+        header("location: index.php?page=form-pelamar-languague-perperson&id=" . $id_pelamar_master);
+    }
+}
+
+if(isset($_POST['daftar_ketrampilan_bahasa']) && $_POST['daftar_ketrampilan_bahasa'] == "Update Ketrampilan Bahasa"){
+    $id_pelamar_master = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : "";
+    $id_bahasa = isset($_GET['id_bahasa']) && $_GET['id_bahasa'] != "" && is_numeric($_GET['id_bahasa']) ? mysqli_real_escape_string($connect, $_GET['id_bahasa']) : "";
+    $nama_bahasa = mysqli_real_escape_string($connect, $_POST['nama_bahasa']);
+    $tingkat_lisan = mysqli_real_escape_string($connect, $_POST['tingkat_lisan']);
+    $tingkat_tulisan = mysqli_real_escape_string($connect, $_POST['tingkat_tulisan']);
+    $urutan_bahasa = mysqli_real_escape_string($connect, $_POST['urutan_bahasa']);
+    mysqli_query($connect, "
+        update tbl_ketrampilan_bahasa set
+        nama_bahasa = '".$nama_bahasa."',
+        tingkat_lisan = '".$tingkat_lisan."',
+        tingkat_tulisan = '".$tingkat_tulisan."',
+        urutan_bahasa = '".$urutan_bahasa."'
+        where id_pelamar = '".$id_pelamar_master."' and
+        id = '".$id_bahasa."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Update Ketrampilan Bahasa.";
+        header("location: index.php?page=form-pelamar-languague-perperson&id=" . $id_pelamar_master);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Update Ketrampilan Bahasa.";
+        header("location: index.php?page=form-pelamar-languague-perperson&id=" . $id_pelamar_master);
+    }
+}
+
+// Add Ketrampilan
+if(isset($_POST['daftar_ketrampilan_lainnya']) && $_POST['daftar_ketrampilan_lainnya'] == "Input Ketrampilan Lainnya"){
+    $id_pelamar_master = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : "";
+    $nama_ketrampilan = mysqli_real_escape_string($connect, $_POST['nama_ketrampilan']);
+    $tingkat_ketrampilan = mysqli_real_escape_string($connect, $_POST['tingkat_ketrampilan']);
+    mysqli_query($connect, "
+        insert into tbl_ketrampilan_lainnya set
+        nama_ketrampilan = '".$nama_ketrampilan."',
+        tingkat_ketrampilan = '".$tingkat_ketrampilan."',
+        id_pelamar = '".$id_pelamar_master."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Insert Ketrampilan Lainnya.";
+        header("location: index.php?page=form-pelamar-skill-perperson&id=" . $id_pelamar_master);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Insert Ketrampilan Lainnya.";
+        header("location: index.php?page=form-pelamar-skill-perperson&id=" . $id_pelamar_master);
+    }
+}
+
+if(isset($_POST['daftar_ketrampilan_lainnya']) && $_POST['daftar_ketrampilan_lainnya'] == "Update Ketrampilan Lainnya"){
+    $id_pelamar_master = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : "";
+    $id_ketrampilan = isset($_GET['id_ketrampilan']) && $_GET['id_ketrampilan'] != "" && is_numeric($_GET['id_ketrampilan']) ? mysqli_real_escape_string($connect, $_GET['id_ketrampilan']) : "";
+    $nama_ketrampilan = mysqli_real_escape_string($connect, $_POST['nama_ketrampilan']);
+    $tingkat_ketrampilan = mysqli_real_escape_string($connect, $_POST['tingkat_ketrampilan']);
+    mysqli_query($connect, "
+        update tbl_ketrampilan_lainnya set
+        nama_ketrampilan = '".$nama_ketrampilan."',
+        tingkat_ketrampilan = '".$tingkat_ketrampilan."' where
+        id_pelamar = '".$id_pelamar_master."' and
+        id = '".$id_ketrampilan."'
+    ");
+    if(mysqli_affected_rows($connect) > 0){
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Berhasil Update Ketrampilan Lainnya.";
+        header("location: index.php?page=form-pelamar-skill-perperson&id=" . $id_pelamar_master);
+    } else {
+        $_SESSION['count'] = 1;
+        $_SESSION['keterangan'] = "Gagal Update Ketrampilan Lainnya.";
+        header("location: index.php?page=form-pelamar-skill-perperson&id=" . $id_pelamar_master);
     }
 }
 

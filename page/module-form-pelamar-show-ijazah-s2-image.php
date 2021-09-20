@@ -16,28 +16,28 @@ function check_page($redirect){
         }
     }
 }
-check_page("form-pelamar-show-transkrip-image");
+check_page("form-pelamar-show-ijazah-s2-image");
 
 $id_pelamar = isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; 
-$query_nama_file_transkrip = mysqli_query($connect, "select file_ijazah from tbl_pelamar_master where id = '".$id_pelamar."'");
-$array_file_transkrip = array();
-$array_link_transkrip = array();
+$query_nama_file_transkrip = mysqli_query($connect, "select file_ijazah_sertifikat_s2 from tbl_pelamar_master where id = '".$id_pelamar."'");
+$array_file_ijazah_s2 = array();
+$array_link_ijazah_s2 = array();
 if(mysqli_num_rows($query_nama_file_transkrip) > 0){
     $hasil_nama_transkrip = mysqli_fetch_array($query_nama_file_transkrip);
-    $nama_file_transkrip_ = $hasil_nama_transkrip['file_ijazah'];
-    $explode_ = explode(".", $nama_file_transkrip_);
+    $nama_file_ijazah_s2 = $hasil_nama_transkrip['file_ijazah_sertifikat_s2'];
+    $explode_ = explode(".", $nama_file_ijazah_s2);
     if(sizeof($explode_) > 0){
-        $nama_file_transkrip_ = "";
+        $nama_file_ijazah_s2 = "";
         for($i = 0; $i < sizeof($explode_) - 1; $i++){
-            $nama_file_transkrip_ = $nama_file_transkrip_ . $explode_[$i];
+            $nama_file_ijazah_s2 = $nama_file_ijazah_s2 . $explode_[$i];
         }
     }
-    if($nama_file_transkrip_ != "" && is_dir("../ocrapi/upload/ijazah/imageconvert/" . $nama_file_transkrip_ . "/")){
-        $scandir_ = scandir("../ocrapi/upload/ijazah/imageconvert/" . $nama_file_transkrip_ . "/");
+    if($nama_file_ijazah_s2 != "" && is_dir("../ocrapi/upload/ijazah_s2_sertifikat/imageconvert/" . $nama_file_ijazah_s2 . "/")){
+        $scandir_ = scandir("../ocrapi/upload/ijazah_s2_sertifikat/imageconvert/" . $nama_file_ijazah_s2 . "/");
         for($i = 2; $i < sizeof($scandir_); $i++){
             if($scandir_[$i] != "Result-All.jpg"){
-                $array_file_transkrip[] = "<img src='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah/imageconvert/" . $nama_file_transkrip_ . "--" . $scandir_[$i]."' style='width: 250px;' />";
-                $array_link_transkrip[] = "<a href=\"../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah/imageconvert/" . $nama_file_transkrip_ . "--" . $scandir_[$i]."\" target=\"_window\" style=\"text-decoration: none;\">Detail</a>";
+                $array_file_ijazah_s2[] = "<img src='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat/imageconvert/" . $nama_file_ijazah_s2 . "--" . $scandir_[$i]."' style='width: 250px;' />";
+                $array_link_ijazah_s2[] = "<a href=\"../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat/imageconvert/" . $nama_file_ijazah_s2 . "--" . $scandir_[$i]."\" target=\"_window\" style=\"text-decoration: none;\">Detail</a>";
             }
         }
     }
@@ -50,19 +50,19 @@ if(mysqli_num_rows($query_nama_file_transkrip) > 0){
     <thead>                  
         <tr>
             <th style="width: 10px; vertical-align: middle;">No</th>
-            <th style="text-align: center; vertical-align: middle;">Transkrip S1 Image</th>
+            <th style="text-align: center; vertical-align: middle;">Ijazah S2 Image</th>
             <th style="text-align: center; vertical-align: middle;">Show Image</th>
         </tr>
     </thead>
     <tbody>
         <?php 
-        if(sizeof($array_file_transkrip) > 0){
-            for($i = 0; $i < sizeof($array_file_transkrip); $i++){
+        if(sizeof($array_file_ijazah_s2) > 0){
+            for($i = 0; $i < sizeof($array_file_ijazah_s2); $i++){
                 ?>
                 <tr>
                     <td><?php echo ($i + 1); ?></td>
-                    <td><?php echo $array_file_transkrip[$i]; ?></td>
-                    <td><?php echo $array_link_transkrip[$i]; ?></td>
+                    <td><?php echo $array_file_ijazah_s2[$i]; ?></td>
+                    <td><?php echo $array_link_ijazah_s2[$i]; ?></td>
                 </tr>
                 <?php
             }
@@ -75,7 +75,7 @@ if(mysqli_num_rows($query_nama_file_transkrip) > 0){
             }
             ?>
             <tr>
-                <td colspan="3">Belum ada File Image Transkrip S1 Atas Nama <b><?php echo $nama_pelamar; ?></b> atau Mungkin masih Diproses.</td>
+                <td colspan="3">Belum ada File Image Ijazah S2 Atas Nama <b><?php echo $nama_pelamar; ?></b> atau Mungkin masih Diproses.</td>
             </tr>  
             <?php 
             

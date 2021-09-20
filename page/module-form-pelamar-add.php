@@ -63,7 +63,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         if($hasil_tampil['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_tampil['file_ktp'])){
             $nama_file_ktp = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <img style=\"width: 250px;\" src=\"../ocrapi/upload/ktp/".$hasil_tampil['file_ktp']."\">
+                    <img style=\"width: 250px;\" src=\"../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ktp--" . $hasil_tampil['file_ktp']."\">
                     <input type='hidden' name='file_ktp_hidden' value='".$hasil_tampil['file_ktp']."' />
                 </div>
             "; 
@@ -72,7 +72,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         if($hasil_tampil['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_tampil['file_ijazah'])){
             $nama_file_ijazah = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <a href='../ocrapi/upload/ijazah/".$hasil_tampil['file_ijazah']."' target='_blank'>Download</a>
+                    <a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah--" . $hasil_tampil['file_ijazah']."' target='_blank'>Download</a>
                     <input type='hidden' name='file_ijazah_hidden' value='".$hasil_tampil['file_ijazah']."' />
                 </div>
             "; 
@@ -81,7 +81,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         if($hasil_tampil['file_ijazah_sertifikat'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $hasil_tampil['file_ijazah_sertifikat'])){
             $nama_file_ijazah_sertifikat = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <a href='../ocrapi/upload/ijazah_sertifikat/".$hasil_tampil['file_ijazah_sertifikat']."' target='_blank'>Download</a>
+                    <a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_sertifikat--" . $hasil_tampil['file_ijazah_sertifikat']."' target='_blank'>Download</a>
                     <input type='hidden' name='file_ijazah_sertifikat_hidden' value='".$hasil_tampil['file_ijazah_sertifikat']."' />
                 </div>
             "; 
@@ -90,7 +90,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         if($hasil_tampil['file_ijazah_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2/" . $hasil_tampil['file_ijazah_s2'])){
             $nama_file_ijazah_s2 = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <a href='../ocrapi/upload/ijazah_s2/".$hasil_tampil['file_ijazah_s2']."' target='_blank'>Download</a>
+                    <a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2--" . $hasil_tampil['file_ijazah_s2']."' target='_blank'>Download</a>
                     <input type='hidden' name='file_ijazah_s2_hidden' value='".$hasil_tampil['file_ijazah_s2']."' />
                 </div>
             "; 
@@ -99,7 +99,7 @@ if(isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])){
         if($hasil_tampil['file_ijazah_sertifikat_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $hasil_tampil['file_ijazah_sertifikat_s2'])){
             $nama_file_ijazah_sertifikat_s2 = "
                 <div id=\"create_div\" style=\"border-radius: .25rem; width: 100%; margin-top: 4px; border-top: 1px solid rgb(208, 208, 208); border-right: 1px solid rgb(208, 208, 208); border-left: 1px solid rgb(208, 208, 208); padding: 5px;\" align=\"center\">
-                    <a href='../ocrapi/upload/ijazah_s2_sertifikat/".$hasil_tampil['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>
+                    <a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat--" . $hasil_tampil['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>
                     <input type='hidden' name='file_ijazah_sertifikat_s2_hidden' value='".$hasil_tampil['file_ijazah_sertifikat_s2']."' />
                 </div>
             "; 

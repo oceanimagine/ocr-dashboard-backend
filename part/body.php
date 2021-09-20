@@ -37,7 +37,13 @@
                                         $page_header = isset($_GET['page']) && $_GET['page'] != "" ? $_GET['page'] : "Home";
                                         $back_url = call_back_button();
                                         ?>
-                                        Module <?php echo judul($page_header); ?>                            
+                                        <?php 
+                                        if(isset($_GET['page']) && $_GET['page'] == "form-pelamar-open-position-perperson-add" && !isset($_GET['id_open_position'])){
+                                            echo "Module " . str_replace("Edit", "Add", judul($page_header));
+                                        } else {
+                                        ?>
+                                        Module <?php echo judul($page_header); ?> 
+                                        <?php } ?>
                                     </h3>
                                 </div>
                                 <div class="col-sm-6">
@@ -72,17 +78,23 @@
                                         <?php } ?>
                                         <?php if($page_header == "form-pelamar-open-position-perperson-add"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-open-position-perperson&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Back</button>
-                                        <?php } ?>  
-                                        <?php if($page_header == "form-pelamar-other-cert"){ ?>
-                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
-                                        <?php } ?>
+                                        <?php } ?> 
                                         <?php if($page_header == "form-pelamar-languague-perperson&"){ ?>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
                                         <?php } ?>
-                                        <?php if($page_header == "form-pelamar-languague-perperson"){ ?>
+                                        <?php if($page_header == "form-pelamar-skill-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-skill-perperson-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add</button>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
                                         <?php } ?>
-                                        <?php if($page_header == "form-pelamar-skill-perperson"){ ?>
+                                        <?php if($page_header == "form-pelamar-show-transkrip-image" || $page_header == "form-pelamar-show-ijazah-image" || $page_header == "form-pelamar-show-transkrip-s2-image" || $page_header == "form-pelamar-show-ijazah-s2-image"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-other-cert"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-other-cert-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add</button>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
+                                        <?php } ?>
+                                        <?php if($page_header == "form-pelamar-languague-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-languague-perperson-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add</button>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
                                         <?php } ?>
                                         <?php } ?>

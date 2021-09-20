@@ -38,12 +38,12 @@ $name_judul = array(
 $nama_tabel = "tbl_id_document_collection_log";
 
 $categories = array();
-if(isset($jumlah_akumulasi_ktp)){
-    $query_jumlah_ktp = mysqli_query($connect, "select count(id_document) jumlah_hit_ktp from ".$nama_tabel." where tipe_document = 'KTP' and DATE_FORMAT(timestamp, '%Y-%m-%d') between '".$begin_awal->format("Y-m-d")."' and '".$end_awal->format("Y-m-d")."'");
+for($i = $begin_awal; $i <= $end_awal; $i->modify('+1 day')){
+    $query_jumlah_ktp = mysqli_query($connect, "select count(id_document) jumlah_hit_ktp from ".$nama_tabel." where tipe_document = 'KTP' and DATE_FORMAT(timestamp, '%Y-%m-%d') = '".$i->format("Y-m-d")."'");
     $hasil_jumlah_ktp = mysqli_fetch_array($query_jumlah_ktp);
-    $query_jumlah_ijazah = mysqli_query($connect, "select count(id_document) jumlah_hit_ijazah from ".$nama_tabel." where tipe_document = 'IJAZAH' and DATE_FORMAT(timestamp, '%Y-%m-%d') between '".$begin_awal->format("Y-m-d")."' and '".$end_awal->format("Y-m-d")."'");
+    $query_jumlah_ijazah = mysqli_query($connect, "select count(id_document) jumlah_hit_ijazah from ".$nama_tabel." where tipe_document = 'IJAZAH' and DATE_FORMAT(timestamp, '%Y-%m-%d') = '".$i->format("Y-m-d")."'");
     $hasil_jumlah_ijazah = mysqli_fetch_array($query_jumlah_ijazah);
-    $query_jumlah_all = mysqli_query($connect, "select count(id_document) jumlah_hit_all from ".$nama_tabel." where DATE_FORMAT(timestamp, '%Y-%m-%d') between '".$begin_awal->format("Y-m-d")."' and '".$end_awal->format("Y-m-d")."'");
+    $query_jumlah_all = mysqli_query($connect, "select count(id_document) jumlah_hit_all from ".$nama_tabel." where DATE_FORMAT(timestamp, '%Y-%m-%d') = '".$i->format("Y-m-d")."'");
     $hasil_jumlah_all = mysqli_fetch_array($query_jumlah_all);
     $jumlah_akumulasi_ktp = $jumlah_akumulasi_ktp + (int) $hasil_jumlah_ktp['jumlah_hit_ktp'];
     $jumlah_akumulasi_ijazah = $jumlah_akumulasi_ijazah + (int) $hasil_jumlah_ijazah['jumlah_hit_ijazah'];

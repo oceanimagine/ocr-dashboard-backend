@@ -149,7 +149,6 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
         if(mysqli_num_rows($query_pelamar) > 0){
             $no = $start + 1;
             while($hasil_pelamar = mysqli_fetch_array($query_pelamar)){
-                $folder = "accessfile";
                 $query_universitas = mysqli_query($connect, "select universitas from tbl_universitas where id = '".$hasil_pelamar['universitas']."'");
                 $hasil_universitas = mysqli_num_rows($query_universitas) > 0 ? mysqli_fetch_array($query_universitas) : array('universitas' => '<font style="font-family: consolas, monospace;">Undefined</font>');
                 
@@ -164,35 +163,35 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                 
                 $file_ktp = "";
                 if($hasil_pelamar['file_ktp'] != "" && file_exists("../ocrapi/upload/ktp/" . $hasil_pelamar['file_ktp'])){
-                    $file_ktp = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ktp--" . $hasil_pelamar['file_ktp']."' target='_blank'>Download</a>";
+                    $file_ktp = "<img src='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ktp--" . $hasil_pelamar['file_ktp']."' style='width: 150px;' />";
                 } else {
                     $file_ktp = "File KTP not found.";
                 }
                 
                 $file_ijazah = "";
                 if($hasil_pelamar['file_ijazah'] != "" && file_exists("../ocrapi/upload/ijazah/" . $hasil_pelamar['file_ijazah'])){
-                    $file_ijazah = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah--" . $hasil_pelamar['file_ijazah']."' target='_blank'>Download</a>"; 
+                    $file_ijazah = "<a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah--" . $hasil_pelamar['file_ijazah']."' target='_blank'>Download</a>"; 
                 } else {
                     $file_ijazah = "File Ijazah S1 not found.";
                 }
                 
                 $file_ijazah_sertifikat = "";
                 if($hasil_pelamar['file_ijazah_sertifikat'] != "" && file_exists("../ocrapi/upload/ijazah_sertifikat/" . $hasil_pelamar['file_ijazah_sertifikat'])){
-                    $file_ijazah_sertifikat = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat']."' target='_blank'>Download</a>"; 
+                    $file_ijazah_sertifikat = "<a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat']."' target='_blank'>Download</a>"; 
                 } else {
                     $file_ijazah_sertifikat = "File Ijazah Sertifikat S1 not found.";
                 }
                 
                 $file_ijazah_s2 = "";
                 if($hasil_pelamar['file_ijazah_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2/" . $hasil_pelamar['file_ijazah_s2'])){
-                    $file_ijazah_s2 = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2--" . $hasil_pelamar['file_ijazah_s2']."' target='_blank'>Download</a>"; 
+                    $file_ijazah_s2 = "<a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2--" . $hasil_pelamar['file_ijazah_s2']."' target='_blank'>Download</a>"; 
                 } else {
                     $file_ijazah_s2 = "File Ijazah S2 not found.";
                 }
                 
                 $file_ijazah_sertifikat_s2 = "";
                 if($hasil_pelamar['file_ijazah_sertifikat_s2'] != "" && file_exists("../ocrapi/upload/ijazah_s2_sertifikat/" . $hasil_pelamar['file_ijazah_sertifikat_s2'])){
-                    $file_ijazah_sertifikat_s2 = "<a href='https://ocr-solution.id:7000/ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>"; 
+                    $file_ijazah_sertifikat_s2 = "<a href='../ocrapi/".$folder."/TOKENACCESS--".$GLOBALS['token']."--ijazah_s2_sertifikat--" . $hasil_pelamar['file_ijazah_sertifikat_s2']."' target='_blank'>Download</a>"; 
                 } else {
                     $file_ijazah_sertifikat_s2 = "File Ijazah Sertifikat S2 not found.";
                 }
