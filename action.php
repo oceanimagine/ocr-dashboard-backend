@@ -788,20 +788,23 @@ if(isset($_POST['upload_excel']) && $_POST['upload_excel'] == "Upload Excel"){
     if(isset($_FILES['file_excel']) && is_array($_FILES['file_excel'])){
         $name = $_FILES['file_excel']['name'];
         $temp = $_FILES['file_excel']['tmp_name'];
-        if($name != "" && file_exists("excel/file/" . $name)){
+        $explode_titik = explode(".", $name);
+        $type = $explode_titik[sizeof($explode_titik) - 1];
+        $namefile = "EXCELIMPORT" . date("YmdHis") . "." . $type;
+        if($name != "" && file_exists("excel/file/" . $namefile)){
             $_SESSION['count'] = 2;
             $_SESSION['keterangan'] = "File Excel dengan nama yang sama sudah pernah diupload.";
             header("location: index.php?page=upload-sso");
             exit();
         } else {
-            if(move_uploaded_file($temp, "excel/file/" . $name)){
+            if(move_uploaded_file($temp, "excel/file/" . $namefile)){
                 $_SESSION['count'] = 2;
                 $_SESSION['keterangan'] = "File Excel berhasil diupload.";
                 mysqli_query($connect, "
                     insert into tbl_proses_excel_log 
                     set nama_file = '".$name."'
                 ");
-                shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $name . " > /dev/null 2>/dev/null &");
+                shell_exec("php /var/www/html/ocr-dashboard-backend/excel/sheets-sso.php " . $namefile . " > /dev/null 2>/dev/null &");
                 header("location: index.php?page=upload-sso-view");
                 exit();
             } else {
