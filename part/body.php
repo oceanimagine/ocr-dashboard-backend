@@ -97,6 +97,9 @@
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-languague-perperson-add&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Add</button>
                                         <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar';">Back</button>
                                         <?php } ?>
+                                        <?php if($page_header == "form-pelamar-ocr-result-perperson"){ ?>
+                                        <button type="submit" class="btn btn-primary" onclick="document.location='index.php?page=form-pelamar-open-position-perperson&id=<?php echo isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id']) ? mysqli_real_escape_string($connect, $_GET['id']) : ""; ?>';">Back</button>
+                                        <?php } ?>
                                         <?php } ?>
                                     </div>
                                 </div>

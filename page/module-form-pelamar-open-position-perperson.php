@@ -95,7 +95,8 @@ if(mysqli_num_rows($query_nik) > 0){
                     <td><?php echo $no; ?></td>
                     <td style="white-space: nowrap;">
                         <a href="index.php?page=<?php echo $base_url_action_edit; ?>&id=<?php echo $id_pelamar; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>" style="text-decoration: none;">Edit</a> - 
-                        <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_open_position['id']; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>');" style="text-decoration: none;">Hapus</a>
+                        <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_open_position['id']; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>');" style="text-decoration: none;">Hapus</a> - 
+                        <a href="index.php?page=form-pelamar-ocr-result-perperson&id_pelamar_active=<?php echo $hasil_open_position['id']; ?>&id=<?php echo $id_pelamar; ?>" style="text-decoration: none;">OCR Result</a>
                     </td>
                     <td><?php echo $hasil_open_position['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_open_position['open_position']; ?></td>

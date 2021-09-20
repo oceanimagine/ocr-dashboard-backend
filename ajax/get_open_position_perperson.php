@@ -64,7 +64,7 @@ if(mysqli_num_rows($query_nik) > 0){
         }
         
         $query_open_position = mysqli_query($connect, "
-            SELECT a.`id_position`, a.`nama_pelamar`, b.open_position, a.bidang_pekerjaan FROM `tbl_pelamar` a, `tbl_event` b where a.`id_position` = b.id and a.nik = '".$nik."'" . $search . " order by b.open_position asc limit $start, $batas_data");
+            SELECT a.id, a.`id_position`, a.`nama_pelamar`, b.open_position, a.bidang_pekerjaan FROM `tbl_pelamar` a, `tbl_event` b where a.`id_position` = b.id and a.nik = '".$nik."'" . $search . " order by b.open_position asc limit $start, $batas_data");
         if(mysqli_num_rows($query_open_position) > 0){
             $no = $start + 1;
             while($hasil_open_position = mysqli_fetch_array($query_open_position)){
@@ -74,7 +74,8 @@ if(mysqli_num_rows($query_nik) > 0){
                     <td><?php echo $no; ?></td>
                     <td style="white-space: nowrap;">
                         <a href="index.php?page=<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_open_position['id']; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>" style="text-decoration: none;">Edit</a> - 
-                        <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_open_position['id']; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>');" style="text-decoration: none;">Hapus</a>
+                        <a href="javascript: hapus_data('index.php?page=<?php echo $base_url_action_hapus; ?>&idhapus=<?php echo $hasil_open_position['id']; ?>&id_open_position=<?php echo $hasil_open_position['id_position']; ?>');" style="text-decoration: none;">Hapus</a> - 
+                        <a href="index.php?page=form-pelamar-ocr-result-perperson&id_pelamar_active=<?php echo $hasil_open_position['id']; ?>&id=<?php echo $id_pelamar; ?>" style="text-decoration: none;">OCR Result</a>
                     </td>
                     <td><?php echo $hasil_open_position['nama_pelamar']; ?></td>
                     <td><?php echo $hasil_open_position['open_position']; ?></td>
