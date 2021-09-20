@@ -401,10 +401,10 @@ if ($xlsx) {
                 $r[$array_huruf['E']] = str_replace("'", "", $r[$array_huruf['E']]);
                 
                 $file_ktp = $r[$array_huruf['P']];
-                $file_ijazah = $r[$array_huruf['Q']];
-                $file_ijazah_s2 = $r[$array_huruf['T']];
-                $file_ijazah_sertifikat = $r[$array_huruf['R']];
-                $file_ijazah_sertifikat_s2 = $r[$array_huruf['U']];
+                $file_ijazah = $r[$array_huruf['R']];
+                $file_ijazah_s2 = $r[$array_huruf['U']];
+                $file_ijazah_sertifikat = $r[$array_huruf['Q']];
+                $file_ijazah_sertifikat_s2 = $r[$array_huruf['T']];
                 
                 $nama_file_ktp = "";
                 $nama_file_ijazah = "";
