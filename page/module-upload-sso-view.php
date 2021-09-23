@@ -45,6 +45,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Jumlah Update Lamaran</th>
             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Jumlah Insert Lamaran Bidang Baru</th>
             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Total Detik</th>
+            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -112,6 +113,7 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td style="white-space: nowrap;" identitas="<?php echo $hasil_file_excel['nama_file']; ?>_update_lamaran"><?php echo $hasil_file_excel['update_lamaran']; ?></td>
                     <td style="white-space: nowrap;" identitas="<?php echo $hasil_file_excel['nama_file']; ?>_insert_lamaran_bidang_baru"><?php echo $hasil_file_excel['insert_lamaran_bidang_baru']; ?></td>
                     <td style="white-space: nowrap;" identitas="<?php echo $hasil_file_excel['nama_file']; ?>_total_detik"><?php echo $hasil_file_excel['total_detik']; ?></td>
+                    <td style="white-space: nowrap;"><a href="excel/file/<?php echo $hasil_file_excel['nama_file']; ?>" style="text-decoration: none;">Download</a></td>
                 </tr>
                 <?php
                 $no++;
