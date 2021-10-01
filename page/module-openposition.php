@@ -43,7 +43,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
             <th style="text-align: center;">Done Amount</th>
             <th style="text-align: center;">Normal Amount</th>
             <th style="text-align: center;">Applicant Amount</th>
-            <th style="text-align: center;">Reset</th><?php /*
+            <?php /*
+            <th style="text-align: center;">Reset</th>
             <th style="text-align: center;">Action</th> */ ?>
             <th style="text-align: center;">Logs</th>
         </tr>
@@ -96,8 +97,8 @@ $s = isset($_GET['q']) && $_GET['q'] != "" ? urlencode($_GET['q']) : "";
                     <td class="row_done" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_done; ?></td>
                     <td class="row_normal" id_data="<?php echo $hasil_openposition['id']; ?>" style="text-align: right;"><?php echo $jumlah_normal; ?></td>
                     <td style="text-align: right;"><?php echo $jumlah_applicant['jumlah_pelamar']; ?></td>
-                    <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
                     <?php /*
+                    <td><a href="javascript: reset('<?php echo $hasil_openposition['id']; ?>');">Reset</a></td>
                     <td><a href="index.php<?php echo $base_url_action_edit; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">Detail</a></td> */ ?>
                     <td><a href="index.php<?php echo $base_url_action_logs; ?>&id=<?php echo $hasil_openposition['id'] . $halaman_before; ?>">See Logs</a></td>
                 </tr>
